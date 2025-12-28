@@ -3,10 +3,11 @@ extends CharacterBody2D
 
 const GRAVITY := 600
 
-@export var health: int
 @export var damage: int
+@export var max_health: int
 # 跳跃强度
 @export var jump_intensity :float
+@export var knockback_intensity :float
 @export var speed: float
 
 #var animation_player
@@ -31,6 +32,7 @@ var anim_map := {
 	State.JUMPKICK: "jumpkick",
 	State.HURT: "hurt"
 }
+var current_health := 0
 var height := 0.0
 var height_speed := 0.0
 var state = State.IDLE
@@ -38,6 +40,7 @@ var state = State.IDLE
 func _ready() -> void:
 	damage_emitter.area_entered.connect(on_emit_damage.bind())
 	damage_receiver.damage_received.connect(on_receive_damage.bind())
+	current_health = max_health
 
 func _process(delta: float) -> void:
 	#var s = delta * speed
@@ -124,5 +127,9 @@ func on_emit_damage(damage_receiver: DamageReceiver) -> void:
 	print(damage_receiver)
 
 func on_receive_damage(damage: int, direction: Vector2) -> void :
-	print(damage, direction)
-	state = State.HURT
+	current_health = clamp(current_health - damage, 0, max_health)
+	if current_health <= 0:
+		queue_free()
+	else:
+		state = State.HURT
+		velocity = direction * knockback_intensity

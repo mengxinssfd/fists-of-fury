@@ -4,7 +4,7 @@ extends Character
 @export var player : Player
 
 func handle_input() -> void:
-	if player != null:
+	if player != null and can_move():
 		# 追踪玩家
 		var direction := (player.position - position).normalized()
 		velocity = direction * speed
