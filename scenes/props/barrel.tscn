@@ -15,6 +15,7 @@ size = Vector2(10, 10)
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_nhfpi")
+knockback_intensity = 50.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_i1o76")
