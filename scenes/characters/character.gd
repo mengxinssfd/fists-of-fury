@@ -1,3 +1,4 @@
+class_name Character
 extends CharacterBody2D
 
 const GRAVITY := 600
@@ -15,18 +16,20 @@ const GRAVITY := 600
 @onready var animation_player := $AnimationPlayer
 @onready var character_sprite := $CharacterSprite
 @onready var damage_emitter := $DamageEmitter
+@onready var damage_receiver : DamageReceiver = $DamageReceiver
 
-enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT}
 
 # 状态对应动画
 var anim_map := {
-	State.IDLE: 'idle',
-	State.WALK: 'walk',
-	State.ATTACK: 'punch',
-	State.TAKEOFF: 'takeoff',
-	State.JUMP: 'jump',
-	State.LAND: 'land',
-	State.JUMPKICK: 'jumpkick',
+	State.IDLE: "idle",
+	State.WALK: "walk",
+	State.ATTACK: "punch",
+	State.TAKEOFF: "takeoff",
+	State.JUMP: "jump",
+	State.LAND: "land",
+	State.JUMPKICK: "jumpkick",
+	State.HURT: "hurt"
 }
 var height := 0.0
 var height_speed := 0.0
@@ -34,6 +37,7 @@ var state = State.IDLE
 
 func _ready() -> void:
 	damage_emitter.area_entered.connect(on_emit_damage.bind())
+	damage_receiver.damage_received.connect(on_receive_damage.bind())
 
 func _process(delta: float) -> void:
 	#var s = delta * speed
@@ -64,16 +68,7 @@ func handle_movement() -> void:
 		#velocity = Vector2.ZERO
 
 func handle_input() -> void:
-	var direction := Input.get_vector('ui_left', 'ui_right','ui_up','ui_down')
-	#position += direction * delta * speed
-	velocity = direction* speed
-
-	if can_attack() and Input.is_action_just_pressed("attack"):
-		state = State.ATTACK
-	if can_jump() and Input.is_action_just_pressed("jump"):
-		state = State.TAKEOFF
-	if can_jumpkick() and Input.is_action_just_pressed("attack"):
-		state = State.JUMPKICK
+	pass
 
 func handle_animations() -> void:
 	var ani = anim_map[state]
@@ -127,3 +122,7 @@ func on_emit_damage(damage_receiver: DamageReceiver) -> void:
 	var direction := Vector2.LEFT if damage_receiver.global_position.x < global_position.x else Vector2.RIGHT
 	damage_receiver.damage_received.emit(damage, direction)
 	print(damage_receiver)
+
+func on_receive_damage(damage: int, direction: Vector2) -> void :
+	print(damage, direction)
+	state = State.HURT

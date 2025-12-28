@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://bvqop0u6krsmm"]
+[gd_scene load_steps=16 format=3 uid="uid://bvqop0u6krsmm"]
 
 [ext_resource type="PackedScene" uid="uid://b67sv7gr5i3el" path="res://scenes/characters/character.tscn" id="1_rp718"]
+[ext_resource type="Script" uid="uid://crkopckjaxsv" path="res://scenes/characters/player.gd" id="2_76oj4"]
 [ext_resource type="Texture2D" uid="uid://bn43pwsg7b2qs" path="res://assets/art/characters/player.png" id="2_yewv4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_76oj4"]
@@ -249,9 +250,13 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yewv4"]
 size = Vector2(10, 6)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_76oj4"]
+size = Vector2(8, 8)
+
 [node name="Player" instance=ExtResource("1_rp718")]
 collision_layer = 1
 collision_mask = 9
+script = ExtResource("2_76oj4")
 health = 30
 damage = 4
 jump_intensity = 150.0
@@ -282,4 +287,12 @@ collision_mask = 96
 position = Vector2(10, 0)
 shape = SubResource("RectangleShape2D_yewv4")
 
+[node name="DamageReceiver" parent="." index="5"]
+collision_layer = 16
+
+[node name="CollisionShape2D" parent="DamageReceiver" index="0"]
+position = Vector2(1, -17)
+shape = SubResource("RectangleShape2D_76oj4")
+
 [editable path="DamageEmitter"]
+[editable path="DamageReceiver"]
