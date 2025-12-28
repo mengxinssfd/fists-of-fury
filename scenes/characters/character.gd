@@ -65,8 +65,10 @@ func handle_animations() -> void:
 func flip_sprites() -> void:
 	if velocity.x > 0:
 		character_sprite.flip_h = false
+		damage_emitter.scale.x = 1
 	elif velocity.x < 0: 
 		character_sprite.flip_h = true
+		damage_emitter.scale.x = -1
 
 func can_move() -> bool:
 	return state == State.IDLE or state == State.WALK
