@@ -121,13 +121,12 @@ func on_land_complate() -> void:
 func on_animation_complete() -> void:
 	state = State.IDLE
 
-func on_emit_damage(damage_receiver: DamageReceiver) -> void:
-	var direction := Vector2.LEFT if damage_receiver.global_position.x < global_position.x else Vector2.RIGHT
-	damage_receiver.damage_received.emit(damage, direction)
-	print(damage_receiver)
+func on_emit_damage(receiver: DamageReceiver) -> void:
+	var direction := Vector2.LEFT if receiver.global_position.x < global_position.x else Vector2.RIGHT
+	receiver.damage_received.emit(damage, direction)
 
-func on_receive_damage(damage: int, direction: Vector2) -> void :
-	current_health = clamp(current_health - damage, 0, max_health)
+func on_receive_damage(dmg: int, direction: Vector2) -> void :
+	current_health = clamp(current_health - dmg, 0, max_health)
 	if current_health <= 0:
 		queue_free()
 	else:
