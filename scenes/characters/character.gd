@@ -16,7 +16,7 @@ const GRAVITY := 600
 @onready var character_sprite := $CharacterSprite
 @onready var damage_emitter := $DamageEmitter
 
-enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK}
 
 # 状态对应动画
 var anim_map := {
@@ -26,6 +26,7 @@ var anim_map := {
 	State.TAKEOFF: 'takeoff',
 	State.JUMP: 'jump',
 	State.LAND: 'land',
+	State.JUMPKICK: 'jumpkick',
 }
 var height := 0.0
 var height_speed := 0.0
@@ -71,6 +72,8 @@ func handle_input() -> void:
 		state = State.ATTACK
 	if can_jump() and Input.is_action_just_pressed("jump"):
 		state = State.TAKEOFF
+	if can_jumpkick() and Input.is_action_just_pressed("attack"):
+		state = State.JUMPKICK
 
 func handle_animations() -> void:
 	var ani = anim_map[state]
@@ -78,7 +81,7 @@ func handle_animations() -> void:
 		animation_player.play(ani)
 	
 func handle_air_time(delta: float) -> void:
-	if state == State.JUMP:
+	if state == State.JUMP or state == State.JUMPKICK:
 		height += height_speed * delta
 		if height < 0:
 			height = 0
@@ -103,6 +106,9 @@ func can_attack() -> bool:
 
 func can_jump() -> bool:
 	return state == State.IDLE or state == State.WALK
+
+func can_jumpkick() -> bool:
+	return state == State.JUMP
 
 # takeoff 动画完结时调用
 func on_takeoff_complate() -> void:
