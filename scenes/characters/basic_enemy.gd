@@ -21,3 +21,12 @@ func on_receive_damage(damage: int, direction: Vector2, hit_type: DamageReceiver
 	if current_health == 0:
 		player.free_slot(self)
 		player_slot = null
+
+func set_handing() -> void:
+	if not player:
+		return
+	# 倒地时不调整面向
+	if state_is(State.GROUNDED):
+		return
+	heading = Vector2.LEFT if position.x > player.position.x else Vector2.RIGHT
+	

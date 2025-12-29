@@ -10,8 +10,11 @@ func handle_input() -> void:
 
 	if can_attack() and Input.is_action_just_pressed("attack"):
 		set_state(State.ATTACK)
-		attack_combo_index = (attack_combo_index + 1) % anim_attacks.size()
-		print(attack_combo_index)
+		if is_last_hit_successful:
+			attack_combo_index = (attack_combo_index + 1) % anim_attacks.size()
+			is_last_hit_successful = false
+		else:
+			attack_combo_index = 0
 	if can_jump() and Input.is_action_just_pressed("jump"):
 		set_state(State.TAKEOFF)
 	if can_jumpkick() and Input.is_action_just_pressed("attack"):
@@ -42,3 +45,9 @@ func free_slot(enemy: BasicEnemy) -> void:
 	)
 	if target_slots.size() == 1:
 		target_slots[0].free_up()
+
+func set_handing() -> void:
+	if velocity.x > 0:
+		heading = Vector2.RIGHT
+	elif velocity.x < 0:
+		heading = Vector2.LEFT
