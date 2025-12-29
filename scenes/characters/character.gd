@@ -52,11 +52,17 @@ enum State {
 	DEATH,
 }
 
+var anim_attacks := [
+	"punch", 
+	"punch_alt", 
+	"kick",
+	"roundkick",
+]
 # 状态对应动画
 var anim_map : Dictionary = {
 	State.IDLE: "idle",
 	State.WALK: "walk",
-	State.ATTACK: "punch",
+	#State.ATTACK: "punch",
 	State.TAKEOFF: "takeoff",
 	State.JUMP: "jump",
 	State.LAND: "land",
@@ -66,6 +72,7 @@ var anim_map : Dictionary = {
 	State.GROUNDED: "grounded",
 	State.DEATH: "grounded",
 }
+var attack_combo_index := 0
 var current_health := 0
 var height := 0.0
 var height_speed := 0.0
@@ -103,6 +110,10 @@ func handle_input() -> void:
 	pass
 
 func handle_animations() -> void:
+	var aa = anim_attacks[attack_combo_index]
+	if state_is(State.ATTACK) and animation_player.has_animation(aa):
+		animation_player.play(aa)
+		return
 	var ani = anim_map[state]
 	if animation_player.has_animation(ani):
 		animation_player.play(ani)

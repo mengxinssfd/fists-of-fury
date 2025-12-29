@@ -6,14 +6,16 @@ extends Character
 func handle_input() -> void:
 	var direction := Input.get_vector("ui_left", "ui_right","ui_up","ui_down")
 	#position += direction * delta * speed
-	velocity = direction* speed
+	velocity = direction * speed
 
 	if can_attack() and Input.is_action_just_pressed("attack"):
-		state = State.ATTACK
+		set_state(State.ATTACK)
+		attack_combo_index = (attack_combo_index + 1) % anim_attacks.size()
+		print(attack_combo_index)
 	if can_jump() and Input.is_action_just_pressed("jump"):
-		state = State.TAKEOFF
+		set_state(State.TAKEOFF)
 	if can_jumpkick() and Input.is_action_just_pressed("attack"):
-		state = State.JUMPKICK
+		set_state(State.JUMPKICK)
 
 func reserve_slot(enemy: BasicEnemy) -> EnemySlot:
 	var available_slots := enemy_slots.filter(
