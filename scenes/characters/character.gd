@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 const GRAVITY := 600
 
+## 允许复活
+@export var can_respawn : bool
 ## 伤害
 @export var damage: int
 ## 倒地时长
@@ -29,20 +31,29 @@ const GRAVITY := 600
 @onready var damage_receiver : DamageReceiver = $DamageReceiver
 
 enum State {
-	IDLE, 
+	IDLE,
 	WALK,
-	ATTACK, 
-	TAKEOFF, 
-	JUMP, 
-	LAND, 
-	JUMPKICK, 
+	## 地面普通攻击
+	ATTACK,
+	## 跳跃时起跳
+	TAKEOFF,
+	## 跳跃中
+	JUMP,
+	## 跳跃时落地
+	LAND,
+	## 跳跃时攻击
+	JUMPKICK,
+	## 被普通攻击
 	HURT,
+	## 击飞时掉落
 	FALL,
+	## 躺地上
 	GROUNDED,
+	DEATH,
 }
 
 # 状态对应动画
-var anim_map := {
+var anim_map : Dictionary = {
 	State.IDLE: "idle",
 	State.WALK: "walk",
 	State.ATTACK: "punch",
@@ -53,6 +64,7 @@ var anim_map := {
 	State.HURT: "hurt",
 	State.FALL: "fall",
 	State.GROUNDED: "grounded",
+	State.DEATH: "grounded",
 }
 var current_health := 0
 var height := 0.0
@@ -67,21 +79,12 @@ func _ready() -> void:
 	current_health = max_health
 
 func _process(delta: float) -> void:
-	#var s = delta * speed
-	#if Input.is_action_pressed("ui_right"):
-		#position += Vector2.RIGHT * s
-	#if Input.is_action_pressed("ui_left"):
-		#position += Vector2.LEFT * s
-	#if Input.is_action_pressed("ui_up"):
-		#position += Vector2.UP * s
-	#if Input.is_action_pressed("ui_down"):
-		#position += Vector2.DOWN * s
-
 	handle_input()
 	handle_movement()
 	handle_animations()
 	handle_air_time(delta)
 	handle_grounded()
+	handle_death(delta)
 	flip_sprites()
 	character_sprite.position = Vector2.UP * height
 	collision_shape.disabled = state_is(State.GROUNDED)
@@ -103,7 +106,7 @@ func handle_animations() -> void:
 	var ani = anim_map[state]
 	if animation_player.has_animation(ani):
 		animation_player.play(ani)
-	
+
 func handle_air_time(delta: float) -> void:
 	if state_in(State.JUMP, State.JUMPKICK, State.FALL):
 		height += height_speed * delta
@@ -120,7 +123,13 @@ func handle_air_time(delta: float) -> void:
 
 func handle_grounded() -> void:
 	if state_is(State.GROUNDED) and Time.get_ticks_msec() - time_since_grounded > duration_grounded:
-		set_state(State.LAND)
+		set_state(State.DEATH if current_health == 0 else State.LAND)
+	
+func handle_death(delta: float) -> void:
+	if state_is(State.DEATH) and not can_respawn:
+		modulate.a -= delta / 2.0
+		if modulate.a <= 0:
+			queue_free()
 
 # 精灵图翻转
 func flip_sprites() -> void:
@@ -142,6 +151,15 @@ func can_jump() -> bool:
 
 func can_jumpkick() -> bool:
 	return state_is(State.JUMP)
+	
+func can_get_hurt() -> bool:
+	return state_in(
+		State.IDLE,
+		State.WALK,
+		State.TAKEOFF,
+		State.JUMP,
+		State.LAND
+	)
 
 # takeoff 动画完结时调用
 func on_takeoff_complate() -> void:
@@ -164,6 +182,8 @@ func on_emit_damage(receiver: DamageReceiver) -> void:
 	receiver.damage_received.emit(damage, direction, hit_type)
 
 func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void :
+	if not can_get_hurt(): 
+		return
 	current_health = clamp(current_health - dmg, 0, max_health)
 	if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 		set_state(State.FALL)
@@ -175,9 +195,9 @@ func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.Hi
 
 func set_state(status: State) -> void:
 	state = status
-	
+
 func state_is(status: State) -> bool:
 	return status == state
-	
+
 func state_in(...states: Array) -> bool:
 	return states.has(state)
