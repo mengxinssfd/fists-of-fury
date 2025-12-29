@@ -56,15 +56,12 @@ enum State {
 	GROUNDED,
 	DEATH,
 	## 被强力攻击击飞
-	FLY
+	FLY,
+	## 准备攻击，敌人才有的
+	PREP_ATTACK
 }
 
-var anim_attacks := [
-	"punch",
-	"punch_alt",
-	"kick",
-	"roundkick",
-]
+var anim_attacks := []
 # 状态对应动画
 var anim_map := {
 	State.IDLE: "idle",
@@ -79,6 +76,7 @@ var anim_map := {
 	State.GROUNDED: "grounded",
 	State.DEATH: "grounded",
 	State.FLY: "fly",
+	State.PREP_ATTACK: "idle",
 }
 var attack_combo_index := 0
 var current_health := 0
@@ -103,6 +101,7 @@ func _process(delta: float) -> void:
 	handle_movement()
 	handle_animations()
 	handle_air_time(delta)
+	handle_prep_attack()
 	handle_grounded()
 	handle_death(delta)
 	set_handing()
@@ -147,6 +146,9 @@ func handle_air_time(delta: float) -> void:
 		else:
 			height_speed -= GRAVITY * delta
 
+func handle_prep_attack() -> void:
+	pass
+
 func handle_grounded() -> void:
 	if state_is(State.GROUNDED) and Time.get_ticks_msec() - time_since_grounded > duration_grounded:
 		set_state(State.DEATH if current_health == 0 else State.LAND)
@@ -187,7 +189,8 @@ func can_get_hurt() -> bool:
 		State.WALK,
 		State.TAKEOFF,
 		State.JUMP,
-		State.LAND
+		State.LAND,
+		State.PREP_ATTACK
 	)
 
 func is_collision_disalbed() -> bool:
@@ -223,14 +226,14 @@ func on_emit_damage(receiver: DamageReceiver) -> void:
 			hit_type = DamageReceiver.HitType.POWER
 			current_damage = damage_power
 	receiver.damage_received.emit(current_damage, direction, hit_type)
-	
+
 
 func on_emit_collateral_damage(receiver: DamageReceiver) -> void:
 	if receiver != damage_receiver:
 		var direction := Vector2.LEFT if receiver.global_position.x < global_position.x else Vector2.RIGHT
 		receiver.damage_received.emit(0, direction, DamageReceiver.HitType.KNOCKDOWN)
 
-func on_wall_hit	(wall: AnimatableBody2D) -> void:
+func on_wall_hit	(_wall: AnimatableBody2D) -> void:
 	set_state(State.FALL)
 	height_speed = knockback_intensity
 	velocity = -velocity / 2.0

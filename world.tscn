@@ -49,21 +49,7 @@ collision_layer = 2
 position = Vector2(80, 44)
 
 [node name="BasicEnemy" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(63, 59)
-player = NodePath("../Player")
-
-[node name="BasicEnemy2" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(27, 58)
-player = NodePath("../Player")
-
-[node name="BasicEnemy3" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(105, 38)
-player = NodePath("../Player")
-
-[node name="BasicEnemy4" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(13, 42)
-player = NodePath("../Player")
-
-[node name="BasicEnemy5" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(89, 59)
+position = Vector2(111, 59)
+duration_between_hits = 2000
+duration_prep_hits = 500
 player = NodePath("../Player")

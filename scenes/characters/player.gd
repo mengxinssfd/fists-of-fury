@@ -3,9 +3,20 @@ extends Character
 
 @onready var enemy_slots : Array = $EnemySlots.get_children()
 
+func _ready() -> void:
+	super._ready()
+	anim_attacks = [
+		"punch",
+		"punch_alt",
+		"kick",
+		"roundkick",
+	]
+
 func handle_input() -> void:
 	var direction := Input.get_vector("ui_left", "ui_right","ui_up","ui_down")
 	#position += direction * delta * speed
+	# 非静止、行走、跳跃状态不接收移动输入
+	#if state_in(State.IDLE, State.WALK, State.JUMP)
 	velocity = direction * speed
 
 	if can_attack() and Input.is_action_just_pressed("attack"):
