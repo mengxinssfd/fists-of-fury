@@ -5,6 +5,10 @@ const GRAVITY := 600
 
 ## 允许复活
 @export var can_respawn : bool
+## 可重新生成飞刀
+@export var can_respawn_knives : bool
+## 重新生成飞刀的等待时间
+@export var duration_between_knife_respawn : int
 ## 伤害
 @export var damage: int
 ## 重拳伤害
@@ -37,6 +41,7 @@ const GRAVITY := 600
 @onready var collateral_emitter := $CollateralDamageEmitter
 @onready var damage_receiver : DamageReceiver = $DamageReceiver
 @onready var knife_sprite := $KnifeSprite
+@onready var projectile_aim :RayCast2D = $ProjectileAim
 
 enum State {
 	IDLE,
@@ -61,7 +66,9 @@ enum State {
 	## 被强力攻击击飞
 	FLY,
 	## 准备攻击，敌人才有的
-	PREP_ATTACK
+	PREP_ATTACK,
+	## 投掷
+	THROW,
 }
 
 var anim_attacks := []
@@ -80,6 +87,7 @@ var anim_map := {
 	State.DEATH: "grounded",
 	State.FLY: "fly",
 	State.PREP_ATTACK: "idle",
+	State.THROW: "throw"
 }
 var attack_combo_index := 0
 var current_health := 0
@@ -91,6 +99,8 @@ var is_last_hit_successful := false
 var state = State.IDLE
 ## 倒地开始时间
 var time_since_grounded := Time.get_ticks_msec()
+## 上次丢失飞刀时间
+var time_since_knife_dismiss := Time.get_ticks_msec()
 
 func _ready() -> void:
 	damage_emitter.area_entered.connect(on_emit_damage.bind())
@@ -106,6 +116,7 @@ func _process(delta: float) -> void:
 	handle_air_time(delta)
 	handle_prep_attack()
 	handle_grounded()
+	handle_knife_respawns()
 	handle_death(delta)
 	set_handing()
 	flip_sprites()
@@ -159,6 +170,13 @@ func handle_grounded() -> void:
 	if state_is(State.GROUNDED) and Time.get_ticks_msec() - time_since_grounded > duration_grounded:
 		set_state(State.DEATH if current_health == 0 else State.LAND)
 
+func handle_knife_respawns() -> void:
+	if (
+		can_respawn_knives and not has_knife and
+		Time.get_ticks_msec() - time_since_knife_dismiss > duration_between_knife_respawn
+	):
+		has_knife = true
+
 func handle_death(delta: float) -> void:
 	if state_is(State.DEATH) and not can_respawn:
 		modulate.a -= delta / 2.0
@@ -174,10 +192,12 @@ func flip_sprites() -> void:
 		character_sprite.flip_h = false
 		knife_sprite.flip_h = false
 		damage_emitter.scale.x = 1
+		projectile_aim.scale.x = 1
 	else:
 		character_sprite.flip_h = true
 		knife_sprite.flip_h = true
 		damage_emitter.scale.x = -1
+		projectile_aim.scale.x = -1
 
 func can_move() -> bool:
 	return state_in(State.IDLE,State.WALK)
@@ -221,6 +241,10 @@ func on_land_complate() -> void:
 func on_animation_complete() -> void:
 	set_state(State.IDLE)
 
+func on_throw_complate() -> void:
+	set_state(State.IDLE)
+	has_knife = false
+
 func on_emit_damage(receiver: DamageReceiver) -> void:
 	var hit_type := DamageReceiver.HitType.NORMAL
 	var direction := Vector2.LEFT if receiver.global_position.x < global_position.x else Vector2.RIGHT
@@ -249,6 +273,9 @@ func on_wall_hit	(_wall: AnimatableBody2D) -> void:
 func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void :
 	if not can_get_hurt():
 		return
+	if has_knife:
+		has_knife = false
+		time_since_knife_dismiss = Time.get_ticks_msec()
 	current_health = clamp(current_health - dmg, 0, max_health)
 	if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 		set_state(State.FALL)

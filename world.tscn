@@ -44,12 +44,17 @@ y_sort_enabled = true
 [node name="Player" parent="ActorsContainer" instance=ExtResource("2_fj7yv")]
 position = Vector2(55, 41)
 collision_layer = 2
+can_respawn_knives = true
 
 [node name="Barrel" parent="ActorsContainer" instance=ExtResource("4_aqk2v")]
 position = Vector2(80, 44)
 
 [node name="BasicEnemy" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
 position = Vector2(111, 59)
-duration_between_hits = 2000
-duration_prep_hits = 500
+duration_between_melee_attacks = 2000
+duration_between_range_attacks = 2000
+duration_prep_melee_attack = 500
+duration_prep_range_attack = 500
 player = NodePath("../Player")
+can_respawn_knives = true
+duration_between_knife_respawn = 2000
