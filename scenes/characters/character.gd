@@ -13,6 +13,8 @@ const GRAVITY := 600
 @export var duration_grounded: float
 ## 被强力攻击击中时飞行的速度
 @export var flight_speed: float
+## 是否持刀
+@export var has_knife: bool
 ## 最大生命
 @export var max_health: int
 ## 跳跃强度
@@ -34,6 +36,7 @@ const GRAVITY := 600
 @onready var damage_emitter := $DamageEmitter
 @onready var collateral_emitter := $CollateralDamageEmitter
 @onready var damage_receiver : DamageReceiver = $DamageReceiver
+@onready var knife_sprite := $KnifeSprite
 
 enum State {
 	IDLE,
@@ -106,7 +109,10 @@ func _process(delta: float) -> void:
 	handle_death(delta)
 	set_handing()
 	flip_sprites()
-	character_sprite.position = Vector2.UP * height
+	knife_sprite.visible = has_knife
+	var h = Vector2.UP * height
+	character_sprite.position = h
+	knife_sprite.position = h
 	collision_shape.disabled = is_collision_disalbed()
 	# damage_receiver.monitorable = can_get_hurt()
 	move_and_slide()
@@ -166,9 +172,11 @@ func set_handing() -> void:
 func flip_sprites() -> void:
 	if heading == Vector2.RIGHT:
 		character_sprite.flip_h = false
+		knife_sprite.flip_h = false
 		damage_emitter.scale.x = 1
 	else:
 		character_sprite.flip_h = true
+		knife_sprite.flip_h = true
 		damage_emitter.scale.x = -1
 
 func can_move() -> bool:
@@ -188,7 +196,7 @@ func can_get_hurt() -> bool:
 		State.IDLE,
 		State.WALK,
 		State.TAKEOFF,
-		State.JUMP,
+		#State.JUMP,
 		State.LAND,
 		State.PREP_ATTACK
 	)
