@@ -23,12 +23,15 @@ func handle_input() -> void:
 		if has_knife:
 			set_state(State.THROW)
 		else:
-			set_state(State.ATTACK)
-			if is_last_hit_successful:
-				attack_combo_index = (attack_combo_index + 1) % anim_attacks.size()
-				is_last_hit_successful = false
+			if can_pickup_collectible():
+				set_state(State.PICKUP)
 			else:
-				attack_combo_index = 0
+				set_state(State.ATTACK)
+				if is_last_hit_successful:
+					attack_combo_index = (attack_combo_index + 1) % anim_attacks.size()
+					is_last_hit_successful = false
+				else:
+					attack_combo_index = 0
 	if can_jump() and Input.is_action_just_pressed("jump"):
 		set_state(State.TAKEOFF)
 	if can_jumpkick() and Input.is_action_just_pressed("attack"):

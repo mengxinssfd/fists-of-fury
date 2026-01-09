@@ -42,6 +42,7 @@ const GRAVITY := 600
 @onready var damage_receiver : DamageReceiver = $DamageReceiver
 @onready var knife_sprite := $KnifeSprite
 @onready var projectile_aim :RayCast2D = $ProjectileAim
+@onready var collectible_sensor: Area2D = $CollectibleSensor
 
 enum State {
 	IDLE,
@@ -69,6 +70,8 @@ enum State {
 	PREP_ATTACK,
 	## 投掷
 	THROW,
+	## 拾取
+	PICKUP,
 }
 
 var anim_attacks := []
@@ -87,7 +90,8 @@ var anim_map := {
 	State.DEATH: "grounded",
 	State.FLY: "fly",
 	State.PREP_ATTACK: "idle",
-	State.THROW: "throw"
+	State.THROW: "throw",
+	State.PICKUP: "pickup",
 }
 var attack_combo_index := 0
 var current_health := 0
@@ -221,6 +225,29 @@ func can_get_hurt() -> bool:
 		State.PREP_ATTACK
 	)
 
+func can_pickup_collectible(collectible := get_collectible()) -> bool:
+	if not collectible: return false
+	if (
+		collectible.type == Collectible.Type.KNIFE
+		and not has_knife
+	):
+		return true
+	return false
+
+func get_collectible() -> Collectible:
+	var collectible_areas := collectible_sensor.get_overlapping_areas()
+	if collectible_areas.size() == 0:
+		return null
+	var collectible : Collectible = collectible_areas[0]
+	return collectible
+
+func pickup_collectible() -> void:
+	var collectible := get_collectible()
+	if can_pickup_collectible(collectible):
+		has_knife = true
+		collectible.queue_free()
+
+
 func is_collision_disalbed() -> bool:
 	return state_in(
 		State.GROUNDED,
@@ -229,19 +256,23 @@ func is_collision_disalbed() -> bool:
 	)
 
 # takeoff 动画完结时调用
-func on_takeoff_complate() -> void:
+func on_takeoff_complete() -> void:
 	set_state(State.JUMP)
 	height_speed = jump_intensity
 
+func on_pickup_complete() -> void:
+	set_state(State.IDLE)
+	pickup_collectible()
+
 # land 动画完结时调用
-func on_land_complate() -> void:
+func on_land_complete() -> void:
 	set_state(State.IDLE)
 
 # 动画完结时调用，在动画界面挂载
 func on_animation_complete() -> void:
 	set_state(State.IDLE)
 
-func on_throw_complate() -> void:
+func on_throw_complete() -> void:
 	set_state(State.IDLE)
 	has_knife = false
 
