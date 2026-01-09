@@ -304,6 +304,7 @@ func on_wall_hit	(_wall: AnimatableBody2D) -> void:
 func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void :
 	if not can_get_hurt():
 		return
+	can_respawn_knives = false
 	if has_knife:
 		has_knife = false
 		time_since_knife_dismiss = Time.get_ticks_msec()

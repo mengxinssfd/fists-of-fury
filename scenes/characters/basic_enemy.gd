@@ -61,9 +61,14 @@ func goto_range_position() -> void:
 
 func goto_melee_position() -> void:
 	if not player: return
-	if player_slot == null:
+	
+	if can_pickup_collectible():
+		set_state(State.PICKUP)
+		free_player_slot()
+	elif player_slot == null:
 		player_slot = player.reserve_slot(self)
-	else:
+	
+	if player_slot != null:
 		var direction := (player_slot.global_position - global_position).normalized()
 		if is_player_within_range():
 			velocity = Vector2.ZERO                                
@@ -91,8 +96,7 @@ func handle_prep_attack() -> void:
 func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void :
 	super.on_receive_damage(dmg, direction, hit_type)
 	if current_health == 0 and player != null:
-		player.free_slot(self)
-		player_slot = null
+		free_player_slot()
 		
 
 # 判断是否在可攻击距离
@@ -117,3 +121,7 @@ func can_throw() -> bool:
 		Time.get_ticks_msec() - time_since_last_range_attack < duration_between_range_attacks
 	): return false
 	return super.can_attack()
+
+func free_player_slot() -> void:
+	player.free_slot(self)
+	player_slot = null
