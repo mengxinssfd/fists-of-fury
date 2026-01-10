@@ -11,6 +11,7 @@ func _ready() -> void:
 		"kick",
 		"roundkick",
 	]
+	EntityManager.say_hello()
 
 func handle_input() -> void:
 	var direction := Input.get_vector("ui_left", "ui_right","ui_up","ui_down")
