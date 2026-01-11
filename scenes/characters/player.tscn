@@ -722,6 +722,7 @@ script = ExtResource("2_76oj4")
 can_respawn = true
 damage = 4
 damage_power = 6
+duration_grounded = 1000.0
 max_health = 30
 jump_intensity = 150.0
 knockback_intensity = 10.0

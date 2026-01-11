@@ -104,9 +104,7 @@ func is_player_within_range() -> bool:
 	return (player_slot.global_position - global_position).length() < 1
 
 func set_handing() -> void:
-	if not player: return
-	# 倒地时不调整面向
-	if state_is(State.GROUNDED): return
+	if not player or not can_move(): return
 	heading = Vector2.LEFT if position.x > player.position.x else Vector2.RIGHT
 
 

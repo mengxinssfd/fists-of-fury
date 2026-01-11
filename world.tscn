@@ -46,7 +46,7 @@ y_sort_enabled = true
 script = ExtResource("3_gbfbk")
 
 [node name="Player" parent="ActorsContainer" instance=ExtResource("2_fj7yv")]
-position = Vector2(55, 41)
+position = Vector2(32, 54)
 collision_layer = 2
 has_knife = true
 
@@ -54,7 +54,7 @@ has_knife = true
 position = Vector2(80, 44)
 
 [node name="BasicEnemy" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(111, 59)
+position = Vector2(72, 57)
 duration_between_melee_attacks = 2000
 duration_between_range_attacks = 2000
 duration_prep_melee_attack = 500
@@ -62,9 +62,9 @@ duration_prep_range_attack = 500
 player = NodePath("../Player")
 
 [node name="Knife" parent="ActorsContainer" instance=ExtResource("6_dwbse")]
-position = Vector2(32, 38)
+position = Vector2(34, 56)
 speed = 0.0
 
 [node name="GoonEnemy" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("7_pkg7o")]
-position = Vector2(49, 55)
+position = Vector2(139, 35)
 player = NodePath("../Player")

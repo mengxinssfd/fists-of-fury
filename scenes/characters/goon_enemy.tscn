@@ -4,8 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://ctw6slou634h8" path="res://assets/art/characters/enemy_goon.png" id="2_jdxqa"]
 
 [node name="GoonEnemy" instance=ExtResource("1_55rrx")]
+duration_between_melee_attacks = 2000
+duration_between_range_attacks = 2000
+duration_prep_melee_attack = 2000
+duration_prep_range_attack = 2000
 can_respawn_knives = true
-duration_between_knife_respawn = 1000
+duration_between_knife_respawn = 3000
 damage = 1
 duration_grounded = 700.0
 flight_speed = 120.0

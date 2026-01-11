@@ -130,7 +130,8 @@ func _process(delta: float) -> void:
 	character_sprite.position = h
 	knife_sprite.position = h
 	collision_shape.disabled = is_collision_disalbed()
-	# damage_receiver.monitorable = can_get_hurt()
+	#damage_emitter.monitoring = is_attacking()
+	damage_receiver.monitorable = can_get_hurt()
 	move_and_slide()
 
 func handle_movement() -> void:
@@ -215,6 +216,9 @@ func can_jump() -> bool:
 
 func can_jumpkick() -> bool:
 	return state_is(State.JUMP)
+
+func is_attacking() -> bool:
+	return state_in(State.ATTACK, State.JUMPKICK)
 
 func can_get_hurt() -> bool:
 	return state_in(

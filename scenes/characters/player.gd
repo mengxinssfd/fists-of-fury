@@ -16,8 +16,10 @@ func handle_input() -> void:
 	var direction := Input.get_vector("ui_left", "ui_right","ui_up","ui_down")
 	#position += direction * delta * speed
 	# 非静止、行走、跳跃状态不接收移动输入
-	#if state_in(State.IDLE, State.WALK, State.JUMP)
-	velocity = direction * speed
+	# 如果允许跳、跳攻击接收输入的话，那就可以微调跳跃距离，否则是固定跳跃距离
+	#if can_move() or state_in(State.JUMP, State.JUMPKICK):
+	if can_move():
+		velocity = direction * speed
 
 	if can_attack() and Input.is_action_just_pressed("attack"):
 		if has_knife:
@@ -64,6 +66,7 @@ func free_slot(enemy: BasicEnemy) -> void:
 		target_slots[0].free_up()
 
 func set_handing() -> void:
+	if not can_move(): return
 	if velocity.x > 0:
 		heading = Vector2.RIGHT
 	elif velocity.x < 0:

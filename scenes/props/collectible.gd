@@ -40,6 +40,7 @@ func _ready() -> void:
 	if state_is(State.FLY):
 		velocity = direction * speed
 	damage_emitter.area_entered.connect(on_emit_damage.bind())
+	damage_emitter.body_exited.connect(on_exit_screen.bind())
 	damage_emitter.position = Vector2.UP * height
 
 func _process(delta: float) -> void:
@@ -48,6 +49,10 @@ func _process(delta: float) -> void:
 	collectible_sprite.position = Vector2.UP * height
 	collectible_sprite.flip_h = velocity.x < 0
 	position += velocity * delta
+
+func on_exit_screen(_wall: AnimatableBody2D) -> void:
+	queue_free()
+
 
 func on_emit_damage(receiver: DamageReceiver) -> void:
 	receiver.damage_received.emit(
