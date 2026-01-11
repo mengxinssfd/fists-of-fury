@@ -37,12 +37,13 @@ const GRAVITY := 600
 @onready var animation_player := $AnimationPlayer
 @onready var character_sprite := $CharacterSprite
 @onready var collision_shape := $CollisionShape2D
-@onready var damage_emitter := $DamageEmitter
+@onready var damage_emitter: Area2D = $DamageEmitter
 @onready var collateral_emitter := $CollateralDamageEmitter
 @onready var damage_receiver : DamageReceiver = $DamageReceiver
 @onready var knife_sprite := $KnifeSprite
 @onready var projectile_aim :RayCast2D = $ProjectileAim
 @onready var collectible_sensor: Area2D = $CollectibleSensor
+@onready var weapon_position: Node2D = $KnifeSprite/WeaponPosition
 
 enum State {
 	IDLE,
@@ -194,12 +195,12 @@ func set_handing() -> void:
 func flip_sprites() -> void:
 	if heading == Vector2.RIGHT:
 		character_sprite.flip_h = false
-		knife_sprite.flip_h = false
+		knife_sprite.scale.x = 1
 		damage_emitter.scale.x = 1
 		projectile_aim.scale.x = 1
 	else:
 		character_sprite.flip_h = true
-		knife_sprite.flip_h = true
+		knife_sprite.scale.x = -1
 		damage_emitter.scale.x = -1
 		projectile_aim.scale.x = -1
 
@@ -275,6 +276,18 @@ func on_animation_complete() -> void:
 func on_throw_complete() -> void:
 	set_state(State.IDLE)
 	has_knife = false
+	var knife_global_posiiton := Vector2(
+		weapon_position.global_position.x,
+		global_position.y
+	)
+	var knife_height := -weapon_position.position.y
+	EntityManager.spawn_collectible.emit(
+		Collectible.Type.KNIFE,
+		Collectible.State.FLY,
+		knife_global_posiiton,
+		heading,
+		knife_height,
+	)
 
 func on_emit_damage(receiver: DamageReceiver) -> void:
 	var hit_type := DamageReceiver.HitType.NORMAL

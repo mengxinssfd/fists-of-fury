@@ -40,38 +40,38 @@ func goto_range_position() -> void:
 	var screen_width := get_viewport_rect().size.x - EDGE_SCREEN_BUFFER * 2
 	var screen_edge_l := camera.position.x - screen_width / 2.0
 	var screen_edge_r := camera.position.x + screen_width / 2.0
-	
+
 	var left_destination := Vector2(screen_edge_l, player.position.y)
 	var right_destination := Vector2(screen_edge_r, player.position.y)
-	
+
 	var closest_destination := Vector2.ZERO
-	
+
 	if (left_destination - position).length() > (right_destination - position).length():
 		closest_destination = right_destination
 	else:
 		closest_destination = left_destination
-		
+
 	if (closest_destination - position).length() < 1:
 		velocity = Vector2.ZERO
 	else:
 		velocity = (closest_destination - position).normalized() * speed
-		
+
 	if can_throw() and has_knife and projectile_aim.is_colliding():
 		set_state(State.PREP_ATTACK)
 
 func goto_melee_position() -> void:
 	if not player: return
-	
+
 	if can_pickup_collectible():
 		set_state(State.PICKUP)
 		free_player_slot()
 	elif player_slot == null:
 		player_slot = player.reserve_slot(self)
-	
+
 	if player_slot != null:
 		var direction := (player_slot.global_position - global_position).normalized()
 		if is_player_within_range():
-			velocity = Vector2.ZERO                                
+			velocity = Vector2.ZERO
 			if can_attack():
 				set_state(State.PREP_ATTACK)
 				time_since_prep_melee_attack = Time.get_ticks_msec()
@@ -80,7 +80,7 @@ func goto_melee_position() -> void:
 
 func handle_prep_attack() -> void:
 	if (
-		state_is(State.PREP_ATTACK) and 
+		state_is(State.PREP_ATTACK) and
 		Time.get_ticks_msec() - time_since_prep_melee_attack > duration_prep_melee_attack
 	):
 		if has_knife:
@@ -91,13 +91,13 @@ func handle_prep_attack() -> void:
 			set_state(State.ATTACK)
 			time_since_last_melee_attack = Time.get_ticks_msec()
 			anim_attacks.shuffle()
-		
+
 
 func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void :
 	super.on_receive_damage(dmg, direction, hit_type)
 	if current_health == 0 and player != null:
 		free_player_slot()
-		
+
 
 # 判断是否在可攻击距离
 func is_player_within_range() -> bool:
@@ -108,7 +108,7 @@ func set_handing() -> void:
 	# 倒地时不调整面向
 	if state_is(State.GROUNDED): return
 	heading = Vector2.LEFT if position.x > player.position.x else Vector2.RIGHT
-	
+
 
 func can_attack() -> bool:
 	if (

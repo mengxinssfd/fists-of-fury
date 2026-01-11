@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bibps8li2r7ur"]
+[gd_scene load_steps=10 format=3 uid="uid://bibps8li2r7ur"]
 
 [ext_resource type="PackedScene" uid="uid://dvyjfoj4awr6h" path="res://scenes/props/collectible.tscn" id="1_a56y7"]
 [ext_resource type="Texture2D" uid="uid://cm0y27xs5ox2n" path="res://assets/art/props/knife.png" id="2_ucw37"]
@@ -73,6 +73,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DamageEmitter:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_t48b8"]
 resource_name = "grounded"
@@ -133,6 +145,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageEmitter:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0neuj"]
 _data = {
@@ -142,7 +166,11 @@ _data = {
 &"grounded": SubResource("Animation_t48b8")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0neuj"]
+size = Vector2(3, 3)
+
 [node name="Knife" instance=ExtResource("1_a56y7")]
+damage = 4
 
 [node name="CollisionShape2D" parent="." index="0"]
 position = Vector2(0, -3)
@@ -158,3 +186,11 @@ offset = Vector2(-8, -8)
 libraries = {
 &"": SubResource("AnimationLibrary_0neuj")
 }
+
+[node name="DamageEmitter" parent="." index="4"]
+collision_mask = 176
+
+[node name="CollisionShape2D" parent="DamageEmitter" index="0"]
+shape = SubResource("RectangleShape2D_0neuj")
+
+[editable path="DamageEmitter"]
