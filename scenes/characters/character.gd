@@ -19,6 +19,8 @@ const GRAVITY := 600
 @export var flight_speed: float
 ## 是否持刀
 @export var has_knife: bool
+## 是否持枪
+@export var has_gun: bool
 ## 最大生命
 @export var max_health: int
 ## 跳跃强度
@@ -41,6 +43,7 @@ const GRAVITY := 600
 @onready var collateral_emitter := $CollateralDamageEmitter
 @onready var damage_receiver : DamageReceiver = $DamageReceiver
 @onready var knife_sprite := $KnifeSprite
+@onready var gun_sprite: Sprite2D = $GunSprite
 @onready var projectile_aim :RayCast2D = $ProjectileAim
 @onready var collectible_sensor: Area2D = $CollectibleSensor
 @onready var weapon_position: Node2D = $KnifeSprite/WeaponPosition
@@ -73,6 +76,8 @@ enum State {
 	THROW,
 	## 拾取
 	PICKUP,
+	## 射击
+	SHOOT,
 }
 
 var anim_attacks := []
@@ -93,6 +98,7 @@ var anim_map := {
 	State.PREP_ATTACK: "idle",
 	State.THROW: "throw",
 	State.PICKUP: "pickup",
+	State.SHOOT: "shoot",
 }
 var attack_combo_index := 0
 var current_health := 0
@@ -126,9 +132,11 @@ func _process(delta: float) -> void:
 	set_handing()
 	flip_sprites()
 	knife_sprite.visible = has_knife
+	gun_sprite.visible = has_gun
 	var h = Vector2.UP * height
 	character_sprite.position = h
 	knife_sprite.position = h
+	gun_sprite.position = h
 	collision_shape.disabled = is_collision_disalbed()
 	#damage_emitter.monitoring = is_attacking()
 	damage_receiver.monitorable = can_get_hurt()
@@ -197,11 +205,13 @@ func flip_sprites() -> void:
 	if heading == Vector2.RIGHT:
 		character_sprite.flip_h = false
 		knife_sprite.scale.x = 1
+		gun_sprite.scale.x = 1
 		damage_emitter.scale.x = 1
 		projectile_aim.scale.x = 1
 	else:
 		character_sprite.flip_h = true
 		knife_sprite.scale.x = -1
+		gun_sprite.scale.x = -1
 		damage_emitter.scale.x = -1
 		projectile_aim.scale.x = -1
 
@@ -237,6 +247,11 @@ func can_pickup_collectible(collectible := get_collectible()) -> bool:
 		and not has_knife
 	):
 		return true
+	if (
+		collectible.type == Collectible.Type.GUN
+		and not has_gun
+	):
+		return true
 	return false
 
 func get_collectible() -> Collectible:
@@ -249,7 +264,10 @@ func get_collectible() -> Collectible:
 func pickup_collectible() -> void:
 	var collectible := get_collectible()
 	if can_pickup_collectible(collectible):
-		has_knife = true
+		if collectible.type == Collectible.Type.KNIFE:
+			has_knife = true
+		elif collectible.type == Collectible.Type.GUN:
+			has_gun = true
 		collectible.queue_free()
 
 
@@ -325,6 +343,8 @@ func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.Hi
 	if has_knife:
 		has_knife = false
 		time_since_knife_dismiss = Time.get_ticks_msec()
+	if has_gun:
+		has_gun = false
 	current_health = clamp(current_health - dmg, 0, max_health)
 	if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 		set_state(State.FALL)

@@ -24,6 +24,8 @@ func handle_input() -> void:
 	if can_attack() and Input.is_action_just_pressed("attack"):
 		if has_knife:
 			set_state(State.THROW)
+		elif has_gun:
+			set_state(State.SHOOT)
 		else:
 			if can_pickup_collectible():
 				set_state(State.PICKUP)

@@ -29,7 +29,7 @@ func _ready() -> void:
 
 func handle_input() -> void:
 	if can_move():
-		if has_knife or can_respawn_knives:
+		if has_knife or can_respawn_knives or has_gun:
 			goto_range_position()
 		else:
 			goto_melee_position()
@@ -56,8 +56,15 @@ func goto_range_position() -> void:
 	else:
 		velocity = (closest_destination - position).normalized() * speed
 
-	if can_throw() and has_knife and projectile_aim.is_colliding():
-		set_state(State.PREP_ATTACK)
+	if can_range_attack() and (has_knife or has_gun) and projectile_aim.is_colliding():
+		#set_state(State.PREP_ATTACK) # 按理来说应该先准备再攻击的
+		if has_knife:
+			set_state(State.THROW)
+			time_since_last_range_attack = Time.get_ticks_msec()
+			time_since_knife_dismiss = Time.get_ticks_msec()
+		elif has_gun:
+			set_state(State.SHOOT)
+			time_since_last_range_attack = Time.get_ticks_msec()
 
 func goto_melee_position() -> void:
 	if not player: return
@@ -83,14 +90,9 @@ func handle_prep_attack() -> void:
 		state_is(State.PREP_ATTACK) and
 		Time.get_ticks_msec() - time_since_prep_melee_attack > duration_prep_melee_attack
 	):
-		if has_knife:
-			set_state(State.THROW)
-			time_since_last_range_attack = Time.get_ticks_msec()
-			time_since_knife_dismiss = Time.get_ticks_msec()
-		else:
-			set_state(State.ATTACK)
-			time_since_last_melee_attack = Time.get_ticks_msec()
-			anim_attacks.shuffle()
+		set_state(State.ATTACK)
+		time_since_last_melee_attack = Time.get_ticks_msec()
+		anim_attacks.shuffle()
 
 
 func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void :
@@ -114,7 +116,7 @@ func can_attack() -> bool:
 	): return false
 	return super.can_attack()
 
-func can_throw() -> bool:
+func can_range_attack() -> bool:
 	if (
 		Time.get_ticks_msec() - time_since_last_range_attack < duration_between_range_attacks
 	): return false
