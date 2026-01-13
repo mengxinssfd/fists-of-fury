@@ -1,11 +1,13 @@
 extends Node2D
 
-var prefab_map := {
+const SHOT_PREFAB := preload("res://scenes/props/shot.tscn")
+const prefab_map := {
 	Collectible.Type.KNIFE: preload("res://scenes/props/knife.tscn")
 }
 
 func _ready() -> void:
 	EntityManager.spawn_collectible.connect(on_spawn_collectible.bind())
+	EntityManager.spawn_shot.connect(on_spawn_shot.bind())
 
 # 生成可拾取道具
 func on_spawn_collectible(
@@ -21,3 +23,16 @@ func on_spawn_collectible(
 	collectible.global_position = collectible_global_position
 	collectible.height = initial_height
 	add_child(collectible)
+
+func on_spawn_shot(
+	gun_root_position: Vector2,
+	distance_traveled: float,
+	height: float,
+) -> void:
+	var shot: Shot = SHOT_PREFAB.instantiate()
+	add_child(shot)
+	shot.initialize(distance_traveled, height)
+	shot.position = gun_root_position
+	# 不能在此 add_child，不然子弹不会消失
+	#add_child(shot)
+	

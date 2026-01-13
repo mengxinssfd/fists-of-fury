@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://6anx3tawwoay"]
+
+[ext_resource type="Script" uid="uid://besoyw0idcfei" path="res://scenes/props/shot.gd" id="1_6t3n6"]
+
+[sub_resource type="Gradient" id="Gradient_6t3n6"]
+offsets = PackedFloat32Array(0.0010718113, 1)
+colors = PackedColorArray(0.9933718, 0.9933718, 0.9933718, 1, 1, 1, 0.3019608, 1)
+
+[node name="Shot" type="Line2D"]
+scale = Vector2(0.7717391, 1)
+width = 1.0
+gradient = SubResource("Gradient_6t3n6")
+script = ExtResource("1_6t3n6")
+duration_shot_across_screen = 200.0

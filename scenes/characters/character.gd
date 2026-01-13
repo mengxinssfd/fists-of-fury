@@ -11,6 +11,8 @@ const GRAVITY := 600
 @export var duration_between_knife_respawn : int
 ## 伤害
 @export var damage: int
+## 枪击伤害
+@export var damage_gunshot: int
 ## 重拳伤害
 @export var damage_power: int
 ## 倒地时长
@@ -78,6 +80,8 @@ enum State {
 	PICKUP,
 	## 射击
 	SHOOT,
+	## 准备攻击，敌人才有的
+	PREP_SHOOT,
 }
 
 var anim_attacks := []
@@ -99,6 +103,7 @@ var anim_map := {
 	State.THROW: "throw",
 	State.PICKUP: "pickup",
 	State.SHOOT: "shoot",
+	State.PREP_SHOOT: "idle",
 }
 var attack_combo_index := 0
 var current_health := 0
@@ -126,6 +131,7 @@ func _process(delta: float) -> void:
 	handle_animations()
 	handle_air_time(delta)
 	handle_prep_attack()
+	handle_prep_shoot()
 	handle_grounded()
 	handle_knife_respawns()
 	handle_death(delta)
@@ -178,6 +184,9 @@ func handle_air_time(delta: float) -> void:
 			height_speed -= GRAVITY * delta
 
 func handle_prep_attack() -> void:
+	pass
+
+func handle_prep_shoot() -> void:
 	pass
 
 func handle_grounded() -> void:
@@ -261,6 +270,30 @@ func get_collectible() -> Collectible:
 	var collectible : Collectible = collectible_areas[0]
 	return collectible
 
+func shoot_gun() -> void:
+	set_state(State.SHOOT)
+	velocity = Vector2.ZERO
+	var target_point := heading * (global_position.x + get_viewport_rect().size.x)
+	var target : Character = projectile_aim.get_collider()
+	if target:
+		target_point = projectile_aim.get_collision_point()
+		target.on_receive_damage(
+			damage_gunshot,
+			heading,
+			DamageReceiver.HitType.KNOCKDOWN
+		)
+	var weapon_global_position := Vector2(
+		weapon_position.global_position.x,
+		position.y
+	)
+	var weapon_height := -weapon_position.position.y
+	var distance := target_point.x - weapon_position.global_position.x
+	EntityManager.spawn_shot.emit(
+		weapon_global_position,
+		distance,
+		weapon_height,
+	)
+
 func pickup_collectible() -> void:
 	var collectible := get_collectible()
 	if can_pickup_collectible(collectible):
@@ -298,7 +331,7 @@ func on_animation_complete() -> void:
 func on_throw_complete() -> void:
 	set_state(State.IDLE)
 	has_knife = false
-	var knife_global_posiiton := Vector2(
+	var knife_global_position := Vector2(
 		weapon_position.global_position.x,
 		global_position.y
 	)
@@ -306,7 +339,7 @@ func on_throw_complete() -> void:
 	EntityManager.spawn_collectible.emit(
 		Collectible.Type.KNIFE,
 		Collectible.State.FLY,
-		knife_global_posiiton,
+		knife_global_position,
 		heading,
 		knife_height,
 	)

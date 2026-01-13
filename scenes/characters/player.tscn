@@ -970,6 +970,7 @@ collision_mask = 137
 script = ExtResource("2_76oj4")
 can_respawn = true
 damage = 4
+damage_gunshot = 8
 damage_power = 6
 duration_grounded = 1000.0
 max_health = 30
@@ -1042,6 +1043,9 @@ offset = Vector2(-24, -48)
 hframes = 10
 vframes = 10
 frame = 8
+
+[node name="ProjectileAim" parent="." index="10"]
+collision_mask = 12
 
 [node name="CollectibleSensor" parent="." index="11"]
 collision_mask = 256

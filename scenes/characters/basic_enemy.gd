@@ -63,9 +63,9 @@ func goto_range_position() -> void:
 			time_since_last_range_attack = Time.get_ticks_msec()
 			time_since_knife_dismiss = Time.get_ticks_msec()
 		elif has_gun:
-			set_state(State.SHOOT)
-			time_since_last_range_attack = Time.get_ticks_msec()
-
+			#set_state(State.SHOOT)
+			set_state(State.PREP_SHOOT)
+			time_since_prep_range_attack = Time.get_ticks_msec()
 func goto_melee_position() -> void:
 	if not player: return
 
@@ -94,6 +94,13 @@ func handle_prep_attack() -> void:
 		time_since_last_melee_attack = Time.get_ticks_msec()
 		anim_attacks.shuffle()
 
+func handle_prep_shoot() -> void:
+	if (
+		state_is(State.PREP_SHOOT) and
+		Time.get_ticks_msec() - time_since_prep_range_attack > duration_prep_range_attack
+	):
+		shoot_gun()
+		time_since_last_range_attack = Time.get_ticks_msec()
 
 func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void :
 	super.on_receive_damage(dmg, direction, hit_type)
