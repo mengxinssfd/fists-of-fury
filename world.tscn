@@ -70,5 +70,3 @@ speed = 0.0
 position = Vector2(139, 35)
 player = NodePath("../Player")
 can_respawn_knives = false
-has_knife = false
-has_gun = true

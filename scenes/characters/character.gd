@@ -239,6 +239,10 @@ func can_jumpkick() -> bool:
 func is_attacking() -> bool:
 	return state_in(State.ATTACK, State.JUMPKICK)
 
+# 判断是否持有武器，其实最好弄个武器变量，并添加武器类型枚举
+func is_carrying_weapon() -> bool:
+	return has_gun or has_knife
+
 func can_get_hurt() -> bool:
 	return state_in(
 		State.IDLE,
@@ -253,12 +257,12 @@ func can_pickup_collectible(collectible := get_collectible()) -> bool:
 	if not collectible: return false
 	if (
 		collectible.type == Collectible.Type.KNIFE
-		and not has_knife
+		and not is_carrying_weapon()
 	):
 		return true
 	if (
 		collectible.type == Collectible.Type.GUN
-		and not has_gun
+		and not is_carrying_weapon()
 	):
 		return true
 	return false
@@ -274,8 +278,8 @@ func shoot_gun() -> void:
 	set_state(State.SHOOT)
 	velocity = Vector2.ZERO
 	var target_point := heading * (global_position.x + get_viewport_rect().size.x)
-	var target : Character = projectile_aim.get_collider()
-	if target:
+	var target := projectile_aim.get_collider()
+	if target is Character:
 		target_point = projectile_aim.get_collision_point()
 		target.on_receive_damage(
 			damage_gunshot,
@@ -375,9 +379,23 @@ func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.Hi
 	can_respawn_knives = false
 	if has_knife:
 		has_knife = false
+		EntityManager.spawn_collectible.emit(
+			Collectible.Type.KNIFE,
+			Collectible.State.FALL,
+			global_position,
+			Vector2.ZERO,
+			0.0
+		)
 		time_since_knife_dismiss = Time.get_ticks_msec()
 	if has_gun:
 		has_gun = false
+		EntityManager.spawn_collectible.emit(
+			Collectible.Type.GUN,
+			Collectible.State.FALL,
+			global_position,
+			Vector2.ZERO,
+			0.0
+		)
 	current_health = clamp(current_health - dmg, 0, max_health)
 	if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 		set_state(State.FALL)
