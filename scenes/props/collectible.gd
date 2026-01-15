@@ -48,6 +48,8 @@ func _process(delta: float) -> void:
 	handle_animations()
 	collectible_sprite.position = Vector2.UP * height
 	collectible_sprite.flip_h = velocity.x < 0
+	damage_emitter.monitoring = state_is(State.FLY)
+	monitorable = state_is(State.GROUNDED)
 	position += velocity * delta
 
 func on_exit_screen(_wall: AnimatableBody2D) -> void:

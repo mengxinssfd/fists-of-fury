@@ -144,7 +144,7 @@ func _process(delta: float) -> void:
 	knife_sprite.position = h
 	gun_sprite.position = h
 	collision_shape.disabled = is_collision_disalbed()
-	#damage_emitter.monitoring = is_attacking()
+	damage_emitter.monitoring = is_attacking()
 	damage_receiver.monitorable = can_get_hurt()
 	move_and_slide()
 
