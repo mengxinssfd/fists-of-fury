@@ -7,6 +7,8 @@ const GRAVITY := 600.0
 @onready var collectible_sprite := $CollectibleSprite
 @onready var damage_emitter: Area2D = $DamageEmitter
 
+## 物品掉落地面上时自动销毁
+@export var autodestroy : bool
 @export var damage : int
 @export var knockdown_intensity : float
 @export var speed : float
@@ -72,9 +74,13 @@ func handle_animations() -> void:
 func handle_fall(delta: float) -> void:
 	if state_is(State.FALL):
 		height += height_speed * delta
+		if autodestroy:
+			modulate.a -= delta
 		if height < 0:
 			height = 0
 			set_state(State.GROUNDED)
+			if autodestroy:
+				queue_free()
 		else:
 			height_speed -= GRAVITY * delta
 

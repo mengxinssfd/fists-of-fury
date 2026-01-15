@@ -26,7 +26,11 @@ func handle_input() -> void:
 			set_state(State.THROW)
 		elif has_gun:
 			#set_state(State.SHOOT)
-			shoot_gun()
+			if ammo_left > 0:
+				shoot_gun()
+				ammo_left -= 1
+			else:
+				set_state(State.THROW)
 		else:
 			if can_pickup_collectible():
 				set_state(State.PICKUP)

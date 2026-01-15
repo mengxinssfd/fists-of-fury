@@ -17,12 +17,14 @@ func on_spawn_collectible(
 	collectible_global_position: Vector2,
 	collectible_direction: Vector2,
 	initial_height: float,
+	autodestroy: bool,
 ) -> void:
 	var collectible : Collectible = prefab_map[type].instantiate()
 	collectible.set_state(initial_state)
 	collectible.direction = collectible_direction
 	collectible.global_position = collectible_global_position
 	collectible.height = initial_height
+	collectible.autodestroy = autodestroy
 	#add_child(collectible)
 	call_deferred("add_child", collectible)
 

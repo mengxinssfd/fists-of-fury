@@ -7,6 +7,7 @@ signal spawn_collectible(
 	collectible_global_position: Vector2,
 	collectible_direction: Vector2,
 	initial_height: float,
+	autodestroy: bool,
 )
 ## 生成子弹
 signal spawn_shot(

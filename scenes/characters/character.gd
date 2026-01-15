@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 const GRAVITY := 600
 
+## 武器掉落时是否销毁
+@export var autodestroy_on_drop : bool
 ## 允许复活
 @export var can_respawn : bool
 ## 可重新生成飞刀
@@ -25,6 +27,8 @@ const GRAVITY := 600
 @export var has_gun: bool
 ## 最大生命
 @export var max_health: int
+## 最大子弹数量
+@export var max_ammo_per_gun : int
 ## 跳跃强度
 @export var jump_intensity :float
 ## 击退强度
@@ -105,6 +109,8 @@ var anim_map := {
 	State.SHOOT: "shoot",
 	State.PREP_SHOOT: "idle",
 }
+## 剩余子弹数量
+var ammo_left := 0
 var attack_combo_index := 0
 var current_health := 0
 ## 头朝向
@@ -305,6 +311,7 @@ func pickup_collectible() -> void:
 			has_knife = true
 		elif collectible.type == Collectible.Type.GUN:
 			has_gun = true
+			ammo_left = max_ammo_per_gun
 		collectible.queue_free()
 
 
@@ -334,18 +341,25 @@ func on_animation_complete() -> void:
 
 func on_throw_complete() -> void:
 	set_state(State.IDLE)
+	var weapon := Collectible.Type.KNIFE
+	if has_gun:
+		weapon = Collectible.Type.GUN
+	
 	has_knife = false
-	var knife_global_position := Vector2(
+	has_gun = false
+	
+	var weapon_global_position := Vector2(
 		weapon_position.global_position.x,
-		global_position.y
+		global_position.y 
 	)
-	var knife_height := -weapon_position.position.y
+	var weapon_height := -weapon_position.position.y
 	EntityManager.spawn_collectible.emit(
-		Collectible.Type.KNIFE,
+		weapon,
 		Collectible.State.FLY,
-		knife_global_position,
+		weapon_global_position,
 		heading,
-		knife_height,
+		weapon_height,
+		false,
 	)
 
 func on_emit_damage(receiver: DamageReceiver) -> void:
@@ -384,7 +398,8 @@ func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.Hi
 			Collectible.State.FALL,
 			global_position,
 			Vector2.ZERO,
-			0.0
+			0.0,
+			autodestroy_on_drop
 		)
 		time_since_knife_dismiss = Time.get_ticks_msec()
 	if has_gun:
@@ -394,7 +409,8 @@ func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.Hi
 			Collectible.State.FALL,
 			global_position,
 			Vector2.ZERO,
-			0.0
+			0.0,
+			autodestroy_on_drop,
 		)
 	current_health = clamp(current_health - dmg, 0, max_health)
 	if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
