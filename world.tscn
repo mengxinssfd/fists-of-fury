@@ -52,7 +52,7 @@ has_gun = true
 
 [node name="Barrel" parent="ActorsContainer" instance=ExtResource("4_aqk2v")]
 position = Vector2(80, 44)
-content_type = 1
+content_type = 2
 
 [node name="BasicEnemy" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
 position = Vector2(72, 57)

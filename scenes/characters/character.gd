@@ -129,7 +129,7 @@ func _ready() -> void:
 	damage_receiver.damage_received.connect(on_receive_damage.bind())
 	collateral_emitter.area_entered.connect(on_emit_collateral_damage.bind())
 	collateral_emitter.body_entered.connect(on_wall_hit.bind())
-	current_health = max_health
+	set_health(max_health)
 
 func _process(delta: float) -> void:
 	handle_input()
@@ -260,6 +260,7 @@ func can_get_hurt() -> bool:
 	)
 
 func can_pickup_collectible(collectible := get_collectible()) -> bool:
+	if can_respawn_knives: return false
 	if not collectible: return false
 	if (
 		collectible.type == Collectible.Type.KNIFE
@@ -270,6 +271,8 @@ func can_pickup_collectible(collectible := get_collectible()) -> bool:
 		collectible.type == Collectible.Type.GUN
 		and not is_carrying_weapon()
 	):
+		return true
+	if collectible.type == Collectible.Type.FOOD:
 		return true
 	return false
 
@@ -312,6 +315,8 @@ func pickup_collectible() -> void:
 		elif collectible.type == Collectible.Type.GUN:
 			has_gun = true
 			ammo_left = max_ammo_per_gun
+		elif collectible.type == Collectible.Type.FOOD:
+			set_health(max_health)
 		collectible.queue_free()
 
 
@@ -412,7 +417,7 @@ func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.Hi
 			0.0,
 			autodestroy_on_drop,
 		)
-	current_health = clamp(current_health - dmg, 0, max_health)
+	set_health(current_health - dmg)
 	if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 		set_state(State.FALL)
 		height_speed = knockdown_intensity
@@ -433,3 +438,6 @@ func state_is(status: State) -> bool:
 
 func state_in(...states: Array) -> bool:
 	return states.has(state)
+
+func set_health(value: int) -> void:
+	current_health = clamp(value, 0, max_health)
