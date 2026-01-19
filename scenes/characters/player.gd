@@ -3,6 +3,12 @@ extends Character
 
 @onready var enemy_slots : Array = $EnemySlots.get_children()
 
+## 连招重置间隔时间
+@export var max_duration_between_successful_hits : int
+
+## 上一次攻击击中时间
+var time_since_last_successful_attack := Time.get_ticks_msec()
+
 func _ready() -> void:
 	super._ready()
 	anim_attacks = [
@@ -11,6 +17,14 @@ func _ready() -> void:
 		"kick",
 		"roundkick",
 	]
+
+func _process(delta: float) -> void:
+	super._process(delta)
+	process_time_between_combo()
+
+func process_time_between_combo() -> void:
+	if Time.get_ticks_msec() - time_since_last_successful_attack > max_duration_between_successful_hits:
+		attack_combo_index = 0
 
 func handle_input() -> void:
 	var direction := Input.get_vector("ui_left", "ui_right","ui_up","ui_down")
@@ -37,12 +51,14 @@ func handle_input() -> void:
 			else:
 				set_state(State.ATTACK)
 				if is_last_hit_successful:
+					time_since_last_successful_attack = Time.get_ticks_msec()
 					attack_combo_index = (attack_combo_index + 1) % anim_attacks.size()
 					is_last_hit_successful = false
 				else:
 					attack_combo_index = 0
 	if can_jump() and Input.is_action_just_pressed("jump"):
 		set_state(State.TAKEOFF)
+		attack_combo_index = 0
 	if can_jumpkick() and Input.is_action_just_pressed("attack"):
 		set_state(State.JUMPKICK)
 

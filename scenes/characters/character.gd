@@ -371,11 +371,10 @@ func on_emit_damage(receiver: DamageReceiver) -> void:
 	var hit_type := DamageReceiver.HitType.NORMAL
 	var direction := Vector2.LEFT if receiver.global_position.x < global_position.x else Vector2.RIGHT
 	var current_damage = damage
+	is_last_hit_successful = true
 	if state_is(State.JUMPKICK):
 		hit_type = DamageReceiver.HitType.KNOCKDOWN
-		is_last_hit_successful = false
 	else:
-		is_last_hit_successful = true
 		if attack_combo_index == anim_attacks.size() - 1:
 			hit_type = DamageReceiver.HitType.POWER
 			current_damage = damage_power
@@ -396,6 +395,7 @@ func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.Hi
 	if not can_get_hurt():
 		return
 	can_respawn_knives = false
+	attack_combo_index = 0
 	if has_knife:
 		has_knife = false
 		EntityManager.spawn_collectible.emit(
