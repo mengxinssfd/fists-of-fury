@@ -3,32 +3,24 @@ extends CharacterBody2D
 
 const GRAVITY := 600
 
-## 武器掉落时是否销毁
-@export var autodestroy_on_drop : bool
+# 在编辑器右侧属性栏分类 category > group > subgroup
+#@export_category("catagory")
+#@export_group("group")
+#@export_subgroup('sub')
+
 ## 允许复活
 @export var can_respawn : bool
-## 可重新生成飞刀
-@export var can_respawn_knives : bool
-## 重新生成飞刀的等待时间
-@export var duration_between_knife_respawn : int
 ## 伤害
 @export var damage: int
-## 枪击伤害
-@export var damage_gunshot: int
-## 重拳伤害
-@export var damage_power: int
 ## 倒地时长
 @export var duration_grounded: float
-## 被强力攻击击中时飞行的速度
-@export var flight_speed: float
-## 是否持刀
-@export var has_knife: bool
-## 是否持枪
-@export var has_gun: bool
 ## 最大生命
 @export var max_health: int
-## 最大子弹数量
-@export var max_ammo_per_gun : int
+
+
+@export_group("Movement")
+## 被强力攻击击中时飞行的速度
+@export var flight_speed: float
 ## 跳跃强度
 @export var jump_intensity :float
 ## 击退强度
@@ -37,6 +29,25 @@ const GRAVITY := 600
 @export var knockdown_intensity :float
 ## 行走速度
 @export var speed: float
+
+@export_group("Weapons")
+## 武器掉落时是否销毁
+@export var autodestroy_on_drop : bool
+## 可重新生成飞刀
+@export var can_respawn_knives : bool
+## 重新生成飞刀的等待时间
+@export var duration_between_knife_respawn : int
+## 枪击伤害
+@export var damage_gunshot: int
+## 重拳伤害
+@export var damage_power: int
+## 是否持刀
+@export var has_knife: bool
+## 是否持枪
+@export var has_gun: bool
+## 最大子弹数量
+@export var max_ammo_per_gun : int
+
 
 #var animation_player
 #func _ready() -> void:
