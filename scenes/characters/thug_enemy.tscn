@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cs2uew1k81upo"]
+
+[ext_resource type="PackedScene" uid="uid://cnunxhijfmru5" path="res://scenes/characters/goon_enemy.tscn" id="1_764t5"]
+
+[node name="ThugEnemy" instance=ExtResource("1_764t5")]
+duration_between_melee_attacks = 1500
+duration_between_range_attacks = 2500
+can_respawn_knives = false
+damage = 3
+duration_grounded = 1300.0
+has_knife = false
+has_gun = true
+
+[editable path="DamageEmitter"]
+[editable path="DamageReceiver"]
+[editable path="CollateralDamageEmitter"]
