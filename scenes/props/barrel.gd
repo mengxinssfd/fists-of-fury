@@ -3,7 +3,9 @@ extends StaticBody2D
 @onready var damage_receiver := $DamageReceiver
 @onready var sprite := $Sprite2D
 
-# 击退强度
+## 掉落道具类型
+@export var content_type : Collectible.Type
+## 击退强度
 @export var knockback_intensity : float
 
 const GRAVITY := 600
@@ -31,6 +33,14 @@ func on_receive_damage(_damage: int, direction: Vector2, _hit_type: DamageReceiv
 		velocity = direction * knockback_intensity
 		if direction == Vector2.LEFT:
 			sprite.flip_h = true
+		EntityManager.spawn_collectible.emit(
+			content_type,
+			Collectible.State.FALL,
+			global_position,
+			direction,
+			0.0,
+			false
+		)
 
 func handle_air_time(delta: float) -> void:
 	if state == State.DESTROYED:

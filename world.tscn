@@ -52,6 +52,7 @@ has_gun = true
 
 [node name="Barrel" parent="ActorsContainer" instance=ExtResource("4_aqk2v")]
 position = Vector2(80, 44)
+content_type = 1
 
 [node name="BasicEnemy" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
 position = Vector2(72, 57)
@@ -70,3 +71,6 @@ speed = 0.0
 position = Vector2(139, 35)
 player = NodePath("../Player")
 can_respawn_knives = false
+
+[node name="Barrel2" parent="ActorsContainer" instance=ExtResource("4_aqk2v")]
+position = Vector2(25, 43)
