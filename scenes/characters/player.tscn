@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bvqop0u6krsmm"]
+[gd_scene format=3 uid="uid://bvqop0u6krsmm"]
 
 [ext_resource type="PackedScene" uid="uid://b67sv7gr5i3el" path="res://scenes/characters/character.tscn" id="1_rp718"]
 [ext_resource type="Script" uid="uid://crkopckjaxsv" path="res://scenes/characters/player.gd" id="2_76oj4"]
@@ -880,42 +880,40 @@ size = Vector2(10, 10)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_atpat"]
 size = Vector2(3, 3)
 
-[node name="Player" instance=ExtResource("1_rp718")]
+[node name="Player" unique_id=1029082095 instance=ExtResource("1_rp718")]
 collision_layer = 3
 collision_mask = 137
 script = ExtResource("2_76oj4")
 max_duration_between_successful_hits = 2000
-autodestroy_on_drop = true
 can_respawn = true
 damage = 4
-damage_gunshot = 8
-damage_power = 6
 duration_grounded = 1000.0
 max_health = 30
-max_ammo_per_gun = 3
 jump_intensity = 150.0
 knockback_intensity = 10.0
 knockdown_intensity = 70.0
 speed = 35.0
+autodestroy_on_drop = true
+damage_gunshot = 8
+damage_power = 6
+max_ammo_per_gun = 3
 
-[node name="CharacterSprite" parent="." index="1"]
+[node name="CharacterSprite" parent="." index="1" unique_id=976784872]
 texture = ExtResource("2_yewv4")
 centered = false
 offset = Vector2(-24, -48)
 hframes = 10
 vframes = 10
 
-[node name="CollisionShape2D" parent="." index="2"]
+[node name="CollisionShape2D" parent="." index="2" unique_id=502760335]
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_76oj4")
 
-[node name="AnimationPlayer" parent="." index="3"]
-libraries = {
-&"": SubResource("AnimationLibrary_dyp2m")
-}
-autoplay = "idle"
+[node name="AnimationPlayer" parent="." index="3" unique_id=787640431]
+libraries/ = SubResource("AnimationLibrary_dyp2m")
+autoplay = &"idle"
 
-[node name="DamageEmitter" parent="." index="4"]
+[node name="DamageEmitter" parent="." index="4" unique_id=1026900757]
 position = Vector2(0, -12)
 collision_mask = 96
 monitoring = true
@@ -924,28 +922,28 @@ monitoring = true
 position = Vector2(10, 0)
 shape = SubResource("RectangleShape2D_yewv4")
 
-[node name="DamageReceiver" parent="." index="5"]
+[node name="DamageReceiver" parent="." index="5" unique_id=145642136]
 collision_layer = 16
 
 [node name="CollisionShape2D" parent="DamageReceiver" index="0"]
 position = Vector2(0, -14)
 shape = SubResource("RectangleShape2D_76oj4")
 
-[node name="EnemySlots" type="Node2D" parent="." index="6"]
+[node name="EnemySlots" type="Node2D" parent="." index="6" unique_id=947672684]
 
-[node name="EnemySlot" parent="EnemySlots" index="0" instance=ExtResource("4_dyp2m")]
+[node name="EnemySlot" parent="EnemySlots" index="0" unique_id=1888076974 instance=ExtResource("4_dyp2m")]
 position = Vector2(13, 3)
 
-[node name="EnemySlot2" parent="EnemySlots" index="1" instance=ExtResource("4_dyp2m")]
+[node name="EnemySlot2" parent="EnemySlots" index="1" unique_id=1268262315 instance=ExtResource("4_dyp2m")]
 position = Vector2(13, -1)
 
-[node name="EnemySlot3" parent="EnemySlots" index="2" instance=ExtResource("4_dyp2m")]
+[node name="EnemySlot3" parent="EnemySlots" index="2" unique_id=1690838311 instance=ExtResource("4_dyp2m")]
 position = Vector2(-13, 3)
 
-[node name="EnemySlot4" parent="EnemySlots" index="3" instance=ExtResource("4_dyp2m")]
+[node name="EnemySlot4" parent="EnemySlots" index="3" unique_id=2014296550 instance=ExtResource("4_dyp2m")]
 position = Vector2(-13, -1)
 
-[node name="KnifeSprite" parent="." index="8"]
+[node name="KnifeSprite" parent="." index="8" unique_id=1309737744]
 texture = ExtResource("5_atpat")
 centered = false
 offset = Vector2(-24, -48)
@@ -953,10 +951,10 @@ hframes = 10
 vframes = 10
 frame = 80
 
-[node name="WeaponPosition" parent="KnifeSprite" index="0"]
+[node name="WeaponPosition" parent="KnifeSprite" index="0" unique_id=1175470519]
 position = Vector2(18, -14)
 
-[node name="GunSprite" parent="." index="9"]
+[node name="GunSprite" parent="." index="9" unique_id=479286213]
 texture = ExtResource("6_tuyoq")
 centered = false
 offset = Vector2(-24, -48)
@@ -964,13 +962,13 @@ hframes = 10
 vframes = 10
 frame = 8
 
-[node name="ProjectileAim" parent="." index="10"]
+[node name="ProjectileAim" parent="." index="10" unique_id=47243931]
 collision_mask = 12
 
-[node name="CollectibleSensor" parent="." index="11"]
+[node name="CollectibleSensor" parent="." index="11" unique_id=1069714035]
 collision_mask = 256
 
-[node name="CollisionShape2D" parent="CollectibleSensor" index="0"]
+[node name="CollisionShape2D" parent="CollectibleSensor" index="0" unique_id=824732867]
 shape = SubResource("RectangleShape2D_atpat")
 
 [editable path="DamageEmitter"]

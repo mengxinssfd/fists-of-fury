@@ -1,49 +1,49 @@
-[gd_scene load_steps=5 format=3 uid="uid://b67sv7gr5i3el"]
+[gd_scene format=3 uid="uid://b67sv7gr5i3el"]
 
 [ext_resource type="Script" uid="uid://csh3vf4bsdupe" path="res://scenes/characters/character.gd" id="1_1bdar"]
 [ext_resource type="Texture2D" uid="uid://spmq380l2jgv" path="res://assets/art/characters/shadow.png" id="2_e22cc"]
 [ext_resource type="PackedScene" uid="uid://dxtw3aocftnkk" path="res://scenes/colliders/damage_emitter.tscn" id="3_e22cc"]
 [ext_resource type="PackedScene" uid="uid://bjlafpqbsd07v" path="res://scenes/colliders/damage_receiver.tscn" id="4_2qjml"]
 
-[node name="Character" type="CharacterBody2D"]
+[node name="Character" type="CharacterBody2D" unique_id=1399624611]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_1bdar")
 speed = 5.0
 
-[node name="ShadowSprite" type="Sprite2D" parent="."]
+[node name="ShadowSprite" type="Sprite2D" parent="." unique_id=58678259]
 texture = ExtResource("2_e22cc")
 centered = false
 offset = Vector2(-7, 0)
 
-[node name="CharacterSprite" type="Sprite2D" parent="."]
+[node name="CharacterSprite" type="Sprite2D" parent="." unique_id=976784872]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=502760335]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=787640431]
 
-[node name="DamageEmitter" parent="." instance=ExtResource("3_e22cc")]
+[node name="DamageEmitter" parent="." unique_id=1026900757 instance=ExtResource("3_e22cc")]
 
-[node name="DamageReceiver" parent="." instance=ExtResource("4_2qjml")]
+[node name="DamageReceiver" parent="." unique_id=145642136 instance=ExtResource("4_2qjml")]
 
-[node name="CollateralDamageEmitter" parent="." instance=ExtResource("3_e22cc")]
+[node name="CollateralDamageEmitter" parent="." unique_id=838551484 instance=ExtResource("3_e22cc")]
 
-[node name="KnifeSprite" type="Sprite2D" parent="."]
+[node name="KnifeSprite" type="Sprite2D" parent="." unique_id=1309737744]
 
-[node name="WeaponPosition" type="Node2D" parent="KnifeSprite"]
+[node name="WeaponPosition" type="Node2D" parent="KnifeSprite" unique_id=1175470519]
 
-[node name="GunSprite" type="Sprite2D" parent="."]
+[node name="GunSprite" type="Sprite2D" parent="." unique_id=479286213]
 
-[node name="ProjectileAim" type="RayCast2D" parent="."]
+[node name="ProjectileAim" type="RayCast2D" parent="." unique_id=47243931]
 target_position = Vector2(100, 0)
 collision_mask = 0
 
-[node name="CollectibleSensor" type="Area2D" parent="."]
+[node name="CollectibleSensor" type="Area2D" parent="." unique_id=1069714035]
 collision_layer = 0
 collision_mask = 0
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectibleSensor"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectibleSensor" unique_id=824732867]
 
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]

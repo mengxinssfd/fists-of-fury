@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://1cxe1t1480ew"]
+[gd_scene format=3 uid="uid://1cxe1t1480ew"]
 
 [ext_resource type="PackedScene" uid="uid://c3qsm8xcnbqgt" path="res://scenes/stage/stage.tscn" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://6q31s1db22pr" path="res://world.gd" id="1_tlwt5"]
@@ -12,49 +12,49 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tlwt5"]
 size = Vector2(6, 64)
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" unique_id=299917147]
 script = ExtResource("1_tlwt5")
 
-[node name="Stage" parent="." instance=ExtResource("1_f3sb7")]
+[node name="Stage" parent="." unique_id=744579508 instance=ExtResource("1_f3sb7")]
 
-[node name="Camera" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="." unique_id=278502874]
 position = Vector2(50, 32)
 
-[node name="InvisibleWalls" type="Node2D" parent="Camera"]
+[node name="InvisibleWalls" type="Node2D" parent="Camera" unique_id=287520316]
 position = Vector2(-50, -32)
 
-[node name="LeftWall" type="AnimatableBody2D" parent="Camera/InvisibleWalls"]
+[node name="LeftWall" type="AnimatableBody2D" parent="Camera/InvisibleWalls" unique_id=1324716159]
 position = Vector2(0, 32)
 collision_layer = 128
 collision_mask = 0
 sync_to_physics = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/InvisibleWalls/LeftWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/InvisibleWalls/LeftWall" unique_id=531944870]
 shape = SubResource("RectangleShape2D_tlwt5")
 
-[node name="RightWall" type="AnimatableBody2D" parent="Camera/InvisibleWalls"]
+[node name="RightWall" type="AnimatableBody2D" parent="Camera/InvisibleWalls" unique_id=13653175]
 position = Vector2(100, 32)
 collision_layer = 128
 collision_mask = 0
 sync_to_physics = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/InvisibleWalls/RightWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/InvisibleWalls/RightWall" unique_id=1588057276]
 shape = SubResource("RectangleShape2D_tlwt5")
 
-[node name="ActorsContainer" type="Node2D" parent="."]
+[node name="ActorsContainer" type="Node2D" parent="." unique_id=326781650]
 y_sort_enabled = true
 script = ExtResource("3_gbfbk")
 
-[node name="Player" parent="ActorsContainer" instance=ExtResource("2_fj7yv")]
+[node name="Player" parent="ActorsContainer" unique_id=667198498 instance=ExtResource("2_fj7yv")]
 position = Vector2(32, 54)
 collision_layer = 2
 has_gun = true
 
-[node name="Barrel" parent="ActorsContainer" instance=ExtResource("4_aqk2v")]
+[node name="Barrel" parent="ActorsContainer" unique_id=123315313 instance=ExtResource("4_aqk2v")]
 position = Vector2(80, 44)
 content_type = 2
 
-[node name="BasicEnemy" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+[node name="BasicEnemy" parent="ActorsContainer" unique_id=1765980408 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
 position = Vector2(72, 57)
 duration_between_melee_attacks = 2000
 duration_between_range_attacks = 2000
@@ -63,11 +63,11 @@ duration_prep_range_attack = 500
 player = NodePath("../Player")
 has_gun = true
 
-[node name="GoonEnemy" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("7_pkg7o")]
+[node name="GoonEnemy" parent="ActorsContainer" unique_id=2102438742 node_paths=PackedStringArray("player") instance=ExtResource("7_pkg7o")]
 position = Vector2(139, 35)
 player = NodePath("../Player")
 can_respawn_knives = false
 
-[node name="ThugEnemy" parent="ActorsContainer" node_paths=PackedStringArray("player") instance=ExtResource("8_gbfbk")]
+[node name="ThugEnemy" parent="ActorsContainer" unique_id=1821846138 node_paths=PackedStringArray("player") instance=ExtResource("8_gbfbk")]
 position = Vector2(12, 37)
 player = NodePath("../Player")
