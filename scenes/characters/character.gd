@@ -12,13 +12,13 @@ const GRAVITY := 600
 @export var can_respawn : bool
 ## 伤害
 @export var damage: int
-## 倒地时长
-@export var duration_grounded: float
 ## 最大生命
 @export var max_health: int
 
 
 @export_group("Movement")
+## 倒地时长
+@export var duration_grounded: float
 ## 被强力攻击击中时飞行的速度
 @export var flight_speed: float
 ## 跳跃强度

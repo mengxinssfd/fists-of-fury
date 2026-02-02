@@ -1,0 +1,233 @@
+[gd_scene format=3 uid="uid://bnon8p3m7v2g8"]
+
+[ext_resource type="PackedScene" uid="uid://b67sv7gr5i3el" path="res://scenes/characters/character.tscn" id="1_s2yea"]
+[ext_resource type="Texture2D" uid="uid://bmguh8kg036po" path="res://assets/art/characters/enemy_boss.png" id="2_jtjl3"]
+[ext_resource type="Script" uid="uid://cbebagfrhtgn" path="res://scenes/characters/igor_boss.gd" id="2_thh5s"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jtjl3"]
+radius = 2.0
+height = 10.0
+
+[sub_resource type="Animation" id="Animation_jtjl3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_phmym"]
+resource_name = "fall"
+length = 0.1
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [60]
+}
+
+[sub_resource type="Animation" id="Animation_3826h"]
+resource_name = "fly"
+length = 0.1
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [43]
+}
+
+[sub_resource type="Animation" id="Animation_75gub"]
+resource_name = "grounded"
+length = 0.1
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [62]
+}
+
+[sub_resource type="Animation" id="Animation_lh6b1"]
+resource_name = "hurt"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [50, 51]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_animation_complete"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_thh5s"]
+resource_name = "idle"
+length = 0.1
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [90]
+}
+
+[sub_resource type="Animation" id="Animation_oq2vq"]
+resource_name = "recover"
+length = 0.1
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [70]
+}
+
+[sub_resource type="Animation" id="Animation_0niep"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [90, 91, 92, 93, 94, 95, 96, 97]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3826h"]
+_data = {
+&"RESET": SubResource("Animation_jtjl3"),
+&"fall": SubResource("Animation_phmym"),
+&"fly": SubResource("Animation_3826h"),
+&"grounded": SubResource("Animation_75gub"),
+&"hurt": SubResource("Animation_lh6b1"),
+&"idle": SubResource("Animation_thh5s"),
+&"recover": SubResource("Animation_oq2vq"),
+&"walk": SubResource("Animation_0niep")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jtjl3"]
+size = Vector2(3, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_thh5s"]
+size = Vector2(12, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0niep"]
+size = Vector2(6, 6)
+
+[node name="IgorBoss" unique_id=1399624611 instance=ExtResource("1_s2yea")]
+collision_layer = 4
+script = ExtResource("2_thh5s")
+speed = 0.0
+
+[node name="CharacterSprite" parent="." index="1" unique_id=976784872]
+texture = ExtResource("2_jtjl3")
+centered = false
+offset = Vector2(-24, -48)
+hframes = 10
+vframes = 10
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=502760335]
+position = Vector2(0, -2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_jtjl3")
+
+[node name="AnimationPlayer" parent="." index="3" unique_id=787640431]
+libraries/ = SubResource("AnimationLibrary_3826h")
+autoplay = &"idle"
+
+[node name="DamageEmitter" parent="." index="4" unique_id=1026900757]
+collision_mask = 16
+
+[node name="CollisionShape2D" parent="DamageEmitter" index="0"]
+position = Vector2(9, -9)
+shape = SubResource("RectangleShape2D_jtjl3")
+
+[node name="DamageReceiver" parent="." index="5" unique_id=145642136]
+collision_layer = 32
+
+[node name="CollisionShape2D" parent="DamageReceiver" index="0"]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_thh5s")
+
+[node name="CollateralDamageEmitter" parent="." index="6" unique_id=838551484]
+collision_mask = 128
+
+[node name="CollisionShape2D" parent="CollateralDamageEmitter" index="0"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_0niep")
+
+[node name="ProjectileAim" parent="." index="9" unique_id=47243931]
+collision_mask = 2
+
+[editable path="DamageEmitter"]
+[editable path="DamageReceiver"]
+[editable path="CollateralDamageEmitter"]
