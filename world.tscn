@@ -5,9 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bvqop0u6krsmm" path="res://scenes/characters/player.tscn" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://c6elbno7atr0e" path="res://scenes/stage/actors_container.gd" id="3_gbfbk"]
 [ext_resource type="PackedScene" uid="uid://blhaxe3oaw1wu" path="res://scenes/props/barrel.tscn" id="4_aqk2v"]
-[ext_resource type="PackedScene" uid="uid://c61gjspr4oue" path="res://scenes/characters/basic_enemy.tscn" id="5_036b0"]
-[ext_resource type="PackedScene" uid="uid://cnunxhijfmru5" path="res://scenes/characters/goon_enemy.tscn" id="7_pkg7o"]
-[ext_resource type="PackedScene" uid="uid://cs2uew1k81upo" path="res://scenes/characters/thug_enemy.tscn" id="8_gbfbk"]
+[ext_resource type="PackedScene" uid="uid://bnon8p3m7v2g8" path="res://scenes/characters/igor_boss.tscn" id="6_dwbse"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tlwt5"]
 size = Vector2(6, 64)
@@ -54,20 +52,6 @@ has_gun = true
 position = Vector2(80, 44)
 content_type = 2
 
-[node name="BasicEnemy" parent="ActorsContainer" unique_id=1765980408 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(72, 57)
-duration_between_melee_attacks = 2000
-duration_between_range_attacks = 2000
-duration_prep_melee_attack = 500
-duration_prep_range_attack = 500
-player = NodePath("../Player")
-has_gun = true
-
-[node name="GoonEnemy" parent="ActorsContainer" unique_id=2102438742 node_paths=PackedStringArray("player") instance=ExtResource("7_pkg7o")]
-position = Vector2(139, 35)
-player = NodePath("../Player")
-can_respawn_knives = false
-
-[node name="ThugEnemy" parent="ActorsContainer" unique_id=1821846138 node_paths=PackedStringArray("player") instance=ExtResource("8_gbfbk")]
-position = Vector2(12, 37)
+[node name="IgorBoss" parent="ActorsContainer" unique_id=1399624611 node_paths=PackedStringArray("player") instance=ExtResource("6_dwbse")]
+position = Vector2(89, 59)
 player = NodePath("../Player")

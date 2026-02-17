@@ -97,6 +97,8 @@ enum State {
 	SHOOT,
 	## 准备攻击，敌人才有的
 	PREP_SHOOT,
+	## 恢复
+	RECOVER,
 }
 
 var anim_attacks := []
@@ -119,6 +121,7 @@ var anim_map := {
 	State.PICKUP: "pickup",
 	State.SHOOT: "shoot",
 	State.PREP_SHOOT: "idle",
+	State.RECOVER: "recover",
 }
 ## 剩余子弹数量
 var ammo_left := 0
@@ -178,10 +181,11 @@ func handle_input() -> void:
 	pass
 
 func handle_animations() -> void:
-	var aa = anim_attacks[attack_combo_index]
-	if state_is(State.ATTACK) and animation_player.has_animation(aa):
-		animation_player.play(aa)
-		return
+	if anim_attacks.size() != 0: 
+		var aa = anim_attacks[attack_combo_index]
+		if state_is(State.ATTACK) and animation_player.has_animation(aa):
+			animation_player.play(aa)
+			return
 	var ani = anim_map[state]
 	if animation_player.has_animation(ani):
 		animation_player.play(ani)

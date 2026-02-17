@@ -126,6 +126,38 @@ tracks/0/keys = {
 "values": [90]
 }
 
+[sub_resource type="Animation" id="Animation_8mg31"]
+resource_name = "land"
+length = 0.1
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [70]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_animation_complete"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_oq2vq"]
 resource_name = "recover"
 length = 0.1
@@ -170,6 +202,7 @@ _data = {
 &"grounded": SubResource("Animation_75gub"),
 &"hurt": SubResource("Animation_lh6b1"),
 &"idle": SubResource("Animation_thh5s"),
+&"land": SubResource("Animation_8mg31"),
 &"recover": SubResource("Animation_oq2vq"),
 &"walk": SubResource("Animation_0niep")
 }
@@ -186,7 +219,15 @@ size = Vector2(6, 6)
 [node name="IgorBoss" unique_id=1399624611 instance=ExtResource("1_s2yea")]
 collision_layer = 4
 script = ExtResource("2_thh5s")
-speed = 0.0
+distance_from_player = 30
+duration_between_attacks = 2000
+damage = 5
+max_health = 50
+duration_grounded = 2000.0
+flight_speed = 90.0
+knockback_intensity = 10.0
+knockdown_intensity = 100.0
+speed = 15.0
 
 [node name="CharacterSprite" parent="." index="1" unique_id=976784872]
 texture = ExtResource("2_jtjl3")
@@ -207,7 +248,7 @@ autoplay = &"idle"
 [node name="DamageEmitter" parent="." index="4" unique_id=1026900757]
 collision_mask = 16
 
-[node name="CollisionShape2D" parent="DamageEmitter" index="0"]
+[node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=599287491]
 position = Vector2(9, -9)
 shape = SubResource("RectangleShape2D_jtjl3")
 
@@ -221,7 +262,7 @@ shape = SubResource("RectangleShape2D_thh5s")
 [node name="CollateralDamageEmitter" parent="." index="6" unique_id=838551484]
 collision_mask = 128
 
-[node name="CollisionShape2D" parent="CollateralDamageEmitter" index="0"]
+[node name="CollisionShape2D" parent="CollateralDamageEmitter" index="0" unique_id=599287491]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_0niep")
 

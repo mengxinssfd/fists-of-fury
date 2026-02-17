@@ -66,6 +66,7 @@ func goto_range_position() -> void:
 			#set_state(State.SHOOT)
 			set_state(State.PREP_SHOOT)
 			time_since_prep_range_attack = Time.get_ticks_msec()
+
 func goto_melee_position() -> void:
 	if not player: return
 
