@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c61gjspr4oue"]
+[gd_scene format=3 uid="uid://c61gjspr4oue"]
 
 [ext_resource type="PackedScene" uid="uid://b67sv7gr5i3el" path="res://scenes/characters/character.tscn" id="1_xsmbu"]
 [ext_resource type="Texture2D" uid="uid://qov1r4sivpm5" path="res://assets/art/characters/enemy_punk.png" id="2_dwul0"]
@@ -710,7 +710,7 @@ size = Vector2(6, 6)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6fn6m"]
 size = Vector2(3, 3)
 
-[node name="BasicEnemy" instance=ExtResource("1_xsmbu")]
+[node name="BasicEnemy" unique_id=1426550428 instance=ExtResource("1_xsmbu")]
 collision_layer = 4
 collision_mask = 12
 script = ExtResource("2_wh1i7")
@@ -719,53 +719,51 @@ duration_between_range_attacks = 0
 duration_prep_melee_attack = 0
 duration_prep_range_attack = 0
 damage = 2
-damage_gunshot = 5
+max_health = 20
 duration_grounded = 1000.0
 flight_speed = 100.0
-max_health = 20
 knockback_intensity = 10.0
 knockdown_intensity = 70.0
 speed = 25.0
+damage_gunshot = 5
 
-[node name="CharacterSprite" parent="." index="1"]
+[node name="CharacterSprite" parent="." index="1" unique_id=976784872]
 texture = ExtResource("2_dwul0")
 centered = false
 offset = Vector2(-24, -48)
 hframes = 10
 vframes = 10
 
-[node name="CollisionShape2D" parent="." index="2"]
+[node name="CollisionShape2D" parent="." index="2" unique_id=502760335]
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_dwul0")
 
-[node name="AnimationPlayer" parent="." index="3"]
-libraries = {
-&"": SubResource("AnimationLibrary_kcdp1")
-}
-autoplay = "idle"
+[node name="AnimationPlayer" parent="." index="3" unique_id=787640431]
+libraries/ = SubResource("AnimationLibrary_kcdp1")
+autoplay = &"idle"
 
-[node name="DamageEmitter" parent="." index="4"]
+[node name="DamageEmitter" parent="." index="4" unique_id=1026900757]
 collision_mask = 16
 
-[node name="CollisionShape2D" parent="DamageEmitter" index="0"]
+[node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=599287491]
 position = Vector2(8, -12)
 shape = SubResource("RectangleShape2D_dwul0")
 
-[node name="DamageReceiver" parent="." index="5"]
+[node name="DamageReceiver" parent="." index="5" unique_id=145642136]
 collision_layer = 32
 
 [node name="CollisionShape2D" parent="DamageReceiver" index="0"]
 position = Vector2(0, -14)
 shape = SubResource("RectangleShape2D_wh1i7")
 
-[node name="CollateralDamageEmitter" parent="." index="6"]
+[node name="CollateralDamageEmitter" parent="." index="6" unique_id=838551484]
 collision_mask = 160
 
-[node name="CollisionShape2D" parent="CollateralDamageEmitter" index="0"]
+[node name="CollisionShape2D" parent="CollateralDamageEmitter" index="0" unique_id=599287491]
 position = Vector2(0, -11)
 shape = SubResource("RectangleShape2D_kcdp1")
 
-[node name="KnifeSprite" parent="." index="7"]
+[node name="KnifeSprite" parent="." index="7" unique_id=1309737744]
 texture = ExtResource("4_wh1i7")
 centered = false
 offset = Vector2(-24, -48)
@@ -773,10 +771,10 @@ hframes = 10
 vframes = 10
 frame = 51
 
-[node name="WeaponPosition" parent="KnifeSprite" index="0"]
+[node name="WeaponPosition" parent="KnifeSprite" index="0" unique_id=1175470519]
 position = Vector2(14, -14)
 
-[node name="GunSprite" parent="." index="8"]
+[node name="GunSprite" parent="." index="8" unique_id=479286213]
 texture = ExtResource("5_kcdp1")
 centered = false
 offset = Vector2(-24, -48)
@@ -784,13 +782,13 @@ hframes = 10
 vframes = 10
 frame = 8
 
-[node name="ProjectileAim" parent="." index="9"]
+[node name="ProjectileAim" parent="." index="9" unique_id=47243931]
 collision_mask = 2
 
-[node name="CollectibleSensor" parent="." index="10"]
+[node name="CollectibleSensor" parent="." index="10" unique_id=1069714035]
 collision_mask = 256
 
-[node name="CollisionShape2D" parent="CollectibleSensor" index="0"]
+[node name="CollisionShape2D" parent="CollectibleSensor" index="0" unique_id=824732867]
 shape = SubResource("RectangleShape2D_6fn6m")
 
 [editable path="DamageEmitter"]
