@@ -887,8 +887,8 @@ script = ExtResource("2_76oj4")
 max_duration_between_successful_hits = 2000
 can_respawn = true
 damage = 4
-duration_grounded = 1000.0
 max_health = 30
+duration_grounded = 1000.0
 jump_intensity = 150.0
 knockback_intensity = 10.0
 knockdown_intensity = 70.0
@@ -918,7 +918,7 @@ position = Vector2(0, -12)
 collision_mask = 96
 monitoring = true
 
-[node name="CollisionShape2D" parent="DamageEmitter" index="0"]
+[node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=599287491]
 position = Vector2(10, 0)
 shape = SubResource("RectangleShape2D_yewv4")
 
