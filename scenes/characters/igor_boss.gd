@@ -66,7 +66,7 @@ func can_attack() -> bool:
 func is_vulerable() -> bool:
 	return state_is(State.RECOVER)
 	
-func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void:
+func on_receive_damage(dmg: int, direction: Vector2, _hit_type: DamageReceiver.HitType) -> void:
 	if not is_vulerable():
 		knockback_force = direction * knockback_intensity
 		return
@@ -84,3 +84,11 @@ func on_animation_complete() -> void:
 		set_state(State.RECOVER)
 		return
 	super.on_animation_complete()
+
+func on_emit_damage(receiver: DamageReceiver) -> void:
+	receiver.damage_received.emit(damage, heading, DamageReceiver.HitType.KNOCKDOWN)
+	time_last_attack = Time.get_ticks_msec()
+	set_state(State.IDLE)
+
+func is_attacking() -> bool:
+	return state_is(State.FLY)
