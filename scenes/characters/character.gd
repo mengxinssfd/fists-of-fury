@@ -57,7 +57,7 @@ const GRAVITY := 600
 @onready var character_sprite := $CharacterSprite
 @onready var collision_shape := $CollisionShape2D
 @onready var damage_emitter: Area2D = $DamageEmitter
-@onready var collateral_emitter := $CollateralDamageEmitter
+@onready var collateral_emitter: Area2D = $CollateralDamageEmitter
 @onready var damage_receiver : DamageReceiver = $DamageReceiver
 @onready var knife_sprite := $KnifeSprite
 @onready var gun_sprite: Sprite2D = $GunSprite
@@ -159,13 +159,14 @@ func _process(delta: float) -> void:
 	flip_sprites()
 	knife_sprite.visible = has_knife
 	gun_sprite.visible = has_gun
-	var h = Vector2.UP * height
+	var h := Vector2.UP * height
 	character_sprite.position = h
 	knife_sprite.position = h
 	gun_sprite.position = h
 	collision_shape.disabled = is_collision_disalbed()
 	damage_emitter.monitoring = is_attacking()
 	damage_receiver.monitorable = can_get_hurt()
+	collateral_emitter.monitoring = state_in(State.FLY)
 	move_and_slide()
 
 func handle_movement() -> void:
@@ -401,9 +402,9 @@ func on_emit_collateral_damage(receiver: DamageReceiver) -> void:
 		var direction := Vector2.LEFT if receiver.global_position.x < global_position.x else Vector2.RIGHT
 		receiver.damage_received.emit(0, direction, DamageReceiver.HitType.KNOCKDOWN)
 
-func on_wall_hit	(_wall: AnimatableBody2D) -> void:
+func on_wall_hit(_wall: AnimatableBody2D) -> void:
 	set_state(State.FALL)
-	height_speed = knockback_intensity
+	height_speed = knockdown_intensity
 	velocity = -velocity / 2.0
 
 func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void :
