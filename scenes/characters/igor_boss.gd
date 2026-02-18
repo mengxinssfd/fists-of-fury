@@ -6,10 +6,14 @@ const GROUND_FRICTION := 50
 
 @export var distance_from_player: int
 @export var duration_between_attacks: int
+# 虚弱时长
+@export var duration_vulerable: int
 @export var player: Player
 
 var knockback_force := Vector2.ZERO
 var time_last_attack := Time.get_ticks_msec()
+# 开始虚弱的时间
+var time_start_vulerable := Time.get_ticks_msec()
 
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -31,6 +35,14 @@ func handle_input() -> void:
 			velocity = (direction + knockback_force) * speed
 			set_state(State.WALK)
 	
+func handle_grounded() -> void:
+	if state_is(State.GROUNDED) and current_health > 0: 
+		set_state(State.RECOVER)
+		time_start_vulerable = Time.get_ticks_msec()
+	elif state_is(State.RECOVER) and Time.get_ticks_msec() - time_start_vulerable > duration_vulerable:
+		set_state(State.IDLE)
+		time_last_attack = Time.get_ticks_msec()
+		
 
 func set_handing() -> void:
 	if player == null or not can_move(): return
@@ -45,11 +57,11 @@ func is_player_within_range() -> bool:
 
 func can_get_hurt() -> bool:
 	return true
-	
+
 func can_attack() -> bool:
 	if Time.get_ticks_msec() - time_last_attack < duration_between_attacks: return false
 	return super.can_attack()
-	
+
 # vulerable 脆弱
 func is_vulerable() -> bool:
 	return state_is(State.RECOVER)
