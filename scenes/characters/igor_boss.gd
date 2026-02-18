@@ -70,3 +70,17 @@ func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.Hi
 	if not is_vulerable():
 		knockback_force = direction * knockback_intensity
 		return
+	set_health(current_health - dmg)
+	if current_health == 0:
+		set_state(State.FALL)
+		height_speed = knockdown_intensity
+		velocity = direction * knockdown_intensity
+	else:
+		velocity = Vector2.ZERO
+		set_state(State.HURT)
+
+func on_animation_complete() -> void:
+	if state_is(State.HURT):
+		set_state(State.RECOVER)
+		return
+	super.on_animation_complete()
