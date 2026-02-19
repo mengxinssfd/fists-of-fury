@@ -14,6 +14,8 @@ const GRAVITY := 600
 @export var damage: int
 ## 最大生命
 @export var max_health: int
+## 角色类型
+@export var type: Type
 
 
 @export_group("Movement")
@@ -99,6 +101,13 @@ enum State {
 	PREP_SHOOT,
 	## 恢复
 	RECOVER,
+}
+enum Type {
+	PLAYER,
+	PUNK,
+	GOON,
+	THUG,
+	BOUNCER,
 }
 
 var anim_attacks := []

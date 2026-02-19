@@ -6,10 +6,17 @@ const prefab_map := {
 	Collectible.Type.GUN: preload("res://scenes/props/gun.tscn"),
 	Collectible.Type.FOOD: preload("res://scenes/props/food.tscn"),
 }
+var enemy_map := {
+	Character.Type.PUNK:  preload("res://scenes/characters/basic_enemy.tscn"),
+	Character.Type.GOON:  preload("res://scenes/characters/goon_enemy.tscn"),
+	Character.Type.THUG:  preload("res://scenes/characters/thug_enemy.tscn"),
+	Character.Type.BOUNCER:  preload("res://scenes/characters/igor_boss.tscn"),
+}
 
 func _ready() -> void:
 	EntityManager.spawn_collectible.connect(on_spawn_collectible.bind())
 	EntityManager.spawn_shot.connect(on_spawn_shot.bind())
+	EntityManager.spawn_enemy.connect(on_spawn_enemy.bind())
 
 # 生成可拾取道具
 func on_spawn_collectible(
@@ -40,4 +47,9 @@ func on_spawn_shot(
 	shot.position = gun_root_position
 	# 不能在此 add_child，不然子弹不会消失
 	#add_child(shot)
-	
+
+func on_spawn_enemy(enemy_data: EnemyData, player: Player) -> void:
+	var enemy: Character = enemy_map[enemy_data.type].instantiate()
+	enemy.global_position = enemy_data.global_position
+	enemy.player = player
+	add_child(enemy)
