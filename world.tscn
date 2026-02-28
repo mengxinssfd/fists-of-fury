@@ -16,6 +16,8 @@ script = ExtResource("1_tlwt5")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=278502874]
 position = Vector2(50, 32)
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
 
 [node name="InvisibleWalls" type="Node2D" parent="Camera" unique_id=287520316]
 position = Vector2(-50, -32)
