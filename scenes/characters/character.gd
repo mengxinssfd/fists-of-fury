@@ -166,16 +166,9 @@ func _process(delta: float) -> void:
 	handle_death(delta)
 	set_handing()
 	flip_sprites()
-	knife_sprite.visible = has_knife
-	gun_sprite.visible = has_gun
-	var h := Vector2.UP * height
-	character_sprite.position = h
-	knife_sprite.position = h
-	gun_sprite.position = h
-	collision_shape.disabled = is_collision_disalbed()
-	damage_emitter.monitoring = is_attacking()
-	damage_receiver.monitorable = can_get_hurt()
-	collateral_emitter.monitoring = state_in(State.FLY)
+	set_sprite_visibility()
+	set_sprite_height_position()
+	setup_collisions()
 	move_and_slide()
 
 func handle_movement() -> void:
@@ -239,6 +232,22 @@ func handle_death(delta: float) -> void:
 
 func set_handing() -> void:
 	pass
+
+func set_sprite_visibility() -> void:
+	knife_sprite.visible = has_knife
+	gun_sprite.visible = has_gun
+
+func set_sprite_height_position() -> void:
+	var h := Vector2.UP * height
+	character_sprite.position = h
+	knife_sprite.position = h
+	gun_sprite.position = h
+
+func setup_collisions() -> void:
+	collision_shape.disabled = is_collision_disalbed()
+	damage_emitter.monitoring = is_attacking()
+	damage_receiver.monitorable = can_get_hurt()
+	collateral_emitter.monitoring = state_is(State.FLY)
 
 # 精灵图翻转
 func flip_sprites() -> void:
