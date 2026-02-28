@@ -141,7 +141,7 @@ var heading := Vector2.RIGHT
 var height := 0.0
 var height_speed := 0.0
 var is_last_hit_successful := false
-var state = State.IDLE
+var state := State.IDLE
 ## 倒地开始时间
 var time_since_grounded := Time.get_ticks_msec()
 ## 上次丢失飞刀时间
@@ -286,19 +286,17 @@ func can_get_hurt() -> bool:
 
 func can_pickup_collectible(collectible := get_collectible()) -> bool:
 	if can_respawn_knives: return false
+	if Time.get_ticks_msec() - time_since_knife_dismiss < duration_between_knife_respawn: return false
 	if not collectible: return false
 	if (
 		collectible.type == Collectible.Type.KNIFE
 		and not is_carrying_weapon()
-	):
-		return true
+	): return true
 	if (
 		collectible.type == Collectible.Type.GUN
 		and not is_carrying_weapon()
-	):
-		return true
-	if collectible.type == Collectible.Type.FOOD:
-		return true
+	): return true
+	if collectible.type == Collectible.Type.FOOD: return true
 	return false
 
 func get_collectible() -> Collectible:
@@ -395,7 +393,7 @@ func on_throw_complete() -> void:
 func on_emit_damage(receiver: DamageReceiver) -> void:
 	var hit_type := DamageReceiver.HitType.NORMAL
 	var direction := Vector2.LEFT if receiver.global_position.x < global_position.x else Vector2.RIGHT
-	var current_damage = damage
+	var current_damage := damage
 	is_last_hit_successful = true
 	if state_is(State.JUMPKICK):
 		hit_type = DamageReceiver.HitType.KNOCKDOWN
