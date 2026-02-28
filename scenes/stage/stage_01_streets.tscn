@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cnunxhijfmru5" path="res://scenes/characters/goon_enemy.tscn" id="4_p7lra"]
 [ext_resource type="PackedScene" uid="uid://c61gjspr4oue" path="res://scenes/characters/basic_enemy.tscn" id="5_j5gp6"]
 [ext_resource type="PackedScene" uid="uid://cs2uew1k81upo" path="res://scenes/characters/thug_enemy.tscn" id="6_mslao"]
+[ext_resource type="PackedScene" uid="uid://blhaxe3oaw1wu" path="res://scenes/props/barrel.tscn" id="7_2j5k0"]
 
 [node name="Stage-01-Streets" unique_id=1102207437 instance=ExtResource("1_lluwt")]
 
@@ -59,7 +60,6 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="Checkpoint3" parent="Checkpoints" parent_id_path=PackedInt32Array(1320159572) index="2" unique_id=865896700 instance=ExtResource("3_63hrp")]
-visible = false
 position = Vector2(299, 1)
 nb_simultan_enemies = 4
 
@@ -94,6 +94,13 @@ collision_mask = 2
 
 [node name="CollisionShape2D" parent="Checkpoints/Checkpoint3/CheckpointPlayArea" parent_id_path=PackedInt32Array(865896700, 546514550) index="0" unique_id=101438308]
 position = Vector2(50, 31)
+
+[node name="Barrel" parent="Containers" parent_id_path=PackedInt32Array(1073710851) index="0" unique_id=4628305 instance=ExtResource("7_2j5k0")]
+position = Vector2(110, 43)
+
+[node name="Barrel2" parent="Containers" parent_id_path=PackedInt32Array(1073710851) index="1" unique_id=1794046795 instance=ExtResource("7_2j5k0")]
+position = Vector2(231, 56)
+content_type = 2
 
 [editable path="Checkpoints/Checkpoint"]
 [editable path="Checkpoints/Checkpoint2"]

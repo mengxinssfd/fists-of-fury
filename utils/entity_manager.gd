@@ -2,7 +2,8 @@ extends Node
 
 ## 敌人死亡
 signal death_enemy(enemy: Character)
-
+## 生成道具-从场景中读取再重新代码生成
+signal orphan_actor(orphan: Node2D)
 ## 生成可拾取道具
 signal spawn_collectible(
 	type: Collectible.Type, 

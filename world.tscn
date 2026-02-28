@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://6q31s1db22pr" path="res://world.gd" id="1_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://bvqop0u6krsmm" path="res://scenes/characters/player.tscn" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://c6elbno7atr0e" path="res://scenes/stage/actors_container.gd" id="3_gbfbk"]
-[ext_resource type="PackedScene" uid="uid://blhaxe3oaw1wu" path="res://scenes/props/barrel.tscn" id="4_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://yqv7rarj3ed8" path="res://scenes/stage/stage_01_streets.tscn" id="6_pkg7o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tlwt5"]
@@ -49,7 +48,3 @@ player = NodePath("Player")
 position = Vector2(32, 54)
 collision_layer = 2
 has_gun = true
-
-[node name="Barrel" parent="ActorsContainer" unique_id=123315313 instance=ExtResource("4_aqk2v")]
-position = Vector2(80, 44)
-content_type = 2
