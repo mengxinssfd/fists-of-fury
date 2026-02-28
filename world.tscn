@@ -38,9 +38,10 @@ sync_to_physics = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/InvisibleWalls/RightWall" unique_id=1588057276]
 shape = SubResource("RectangleShape2D_tlwt5")
 
-[node name="ActorsContainer" type="Node2D" parent="." unique_id=326781650]
+[node name="ActorsContainer" type="Node2D" parent="." unique_id=326781650 node_paths=PackedStringArray("player")]
 y_sort_enabled = true
 script = ExtResource("3_gbfbk")
+player = NodePath("Player")
 
 [node name="Player" parent="ActorsContainer" unique_id=667198498 instance=ExtResource("2_fj7yv")]
 position = Vector2(32, 54)

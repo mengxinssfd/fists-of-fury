@@ -4,10 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://ctw6slou634h8" path="res://assets/art/characters/enemy_goon.png" id="2_jdxqa"]
 
 [node name="GoonEnemy" unique_id=2121083044 instance=ExtResource("1_55rrx")]
-duration_between_melee_attacks = 2000
-duration_between_range_attacks = 2000
-duration_prep_melee_attack = 2000
-duration_prep_range_attack = 2000
 damage = 1
 max_health = 18
 type = 2

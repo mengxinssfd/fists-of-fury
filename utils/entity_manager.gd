@@ -1,5 +1,8 @@
 extends Node
 
+## 敌人死亡
+signal death_enemy(enemy: Character)
+
 ## 生成可拾取道具
 signal spawn_collectible(
 	type: Collectible.Type, 
@@ -19,4 +22,5 @@ signal spawn_shot(
 	height: float,
 )
 ## 生成敌人
-signal spawn_enemy(enemy_data: EnemyData, player: Player)
+#signal spawn_enemy(enemy_data: EnemyData, player: Player)
+signal spawn_enemy(enemy_data: EnemyData)

@@ -10,6 +10,7 @@ size = Vector2(100, 64)
 
 [node name="Checkpoint" type="Node2D" unique_id=540036729]
 script = ExtResource("1_bypk3")
+nb_simultan_enemies = 2
 
 [node name="Enemies" type="Node2D" parent="." unique_id=656840839]
 

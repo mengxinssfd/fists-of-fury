@@ -107,6 +107,7 @@ func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.Hi
 	super.on_receive_damage(dmg, direction, hit_type)
 	if current_health == 0 and player != null:
 		free_player_slot()
+		EntityManager.death_enemy.emit(self)
 
 
 # 判断是否在可攻击距离

@@ -13,6 +13,8 @@ var enemy_map := {
 	Character.Type.BOUNCER:  preload("res://scenes/characters/igor_boss.tscn"),
 }
 
+@export var player: Player
+
 func _ready() -> void:
 	EntityManager.spawn_collectible.connect(on_spawn_collectible.bind())
 	EntityManager.spawn_shot.connect(on_spawn_shot.bind())
@@ -48,7 +50,8 @@ func on_spawn_shot(
 	# 不能在此 add_child，不然子弹不会消失
 	#add_child(shot)
 
-func on_spawn_enemy(enemy_data: EnemyData, player: Player) -> void:
+#func on_spawn_enemy(enemy_data: EnemyData, player: Player) -> void:
+func on_spawn_enemy(enemy_data: EnemyData) -> void:
 	var enemy: Character = enemy_map[enemy_data.type].instantiate()
 	enemy.global_position = enemy_data.global_position
 	enemy.player = player
