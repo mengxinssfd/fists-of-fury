@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 EntityManager="*res://utils/entity_manager.gd"
+StageManager="*uid://c01e6b1af7k0u"
 
 [display]
 
