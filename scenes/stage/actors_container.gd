@@ -15,6 +15,8 @@ var enemy_map := {
 
 @export var player: Player
 
+var doors: Array[Door] = []
+
 # 类似vue的组件生命周期一样，要在created而不是mounted做监听
 #func _ready() -> void:
 func _init() -> void:
@@ -55,12 +57,16 @@ func on_spawn_shot(
 
 #func on_spawn_enemy(enemy_data: EnemyData, player: Player) -> void:
 func on_spawn_enemy(enemy_data: EnemyData) -> void:
-	var enemy: Character = enemy_map[enemy_data.type].instantiate()
+	var enemy: BasicEnemy = enemy_map[enemy_data.type].instantiate()
 	enemy.global_position = enemy_data.global_position
 	enemy.player = player
-	enemy.state = enemy_data.state
+	enemy.set_state(enemy_data.state)
 	enemy.height = enemy_data.height
+	if enemy_data.door_index > -1:
+		enemy.assign_door(doors[enemy_data.door_index])
 	add_child(enemy)
 
 func on_orphan_actor(orphan: Node2D) -> void:
 	orphan.reparent(self)
+	if orphan is Door:
+		doors.append(orphan)

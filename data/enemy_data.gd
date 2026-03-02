@@ -3,6 +3,7 @@ class_name EnemyData extends Resource
 
 const DROP_HEIGHT := 50
 
+@export var door_index: int
 @export var type: Character.Type
 @export var global_position: Vector2
 @export var height: int
@@ -11,8 +12,10 @@ const DROP_HEIGHT := 50
 func _init(
 	character_type: Character.Type = Character.Type.PUNK,
 	position: Vector2 = Vector2.ZERO,
+	assigned_door_index: int = -1,
 ) -> void:
 	type = character_type
+	door_index = assigned_door_index
 	if position.y < 0:
 		height = DROP_HEIGHT
 		global_position = position + Vector2.DOWN * DROP_HEIGHT

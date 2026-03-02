@@ -103,6 +103,7 @@ enum State {
 	RECOVER,
 	## 从天而降
 	DROP,
+	WAIT,
 }
 enum Type {
 	PLAYER,
@@ -134,6 +135,7 @@ var anim_map := {
 	State.PREP_SHOOT: "idle",
 	State.RECOVER: "recover",
 	State.DROP: "idle",
+	State.WAIT: "idle",
 }
 ## 剩余子弹数量
 var ammo_left := 0

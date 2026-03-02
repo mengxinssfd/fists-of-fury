@@ -5,6 +5,7 @@ signal open_door
 
 ## 门开启所需时间，单位ms
 @export var duration_open: float
+@export var enemies: Array[BasicEnemy]
 
 @onready var sprite: Sprite2D = $DoorSprite
 # duration_open 是export属性，不加onready的话，编辑器设置的值要延迟才能获取到
@@ -29,6 +30,10 @@ func _process(_delta: float) -> void:
 		else:
 			var progress := time_opening.get_progress()
 			sprite.position = lerp(Vector2.ZERO, p, progress)
+
+func assign_door_index(index: int) -> void:
+	for enemy in enemies:
+		enemy.assigned_door_index = index
 
 func open() -> void:
 	if state == State.CLOSED:

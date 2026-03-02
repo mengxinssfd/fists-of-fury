@@ -114,8 +114,9 @@ position = Vector2(110, 43)
 position = Vector2(231, 56)
 content_type = 2
 
-[node name="Door" parent="Doors" parent_id_path=PackedInt32Array(876184455) index="0" unique_id=1560958627 instance=ExtResource("8_w6ome")]
+[node name="Door" parent="Doors" parent_id_path=PackedInt32Array(876184455) index="0" unique_id=1560958627 node_paths=PackedStringArray("enemies") instance=ExtResource("8_w6ome")]
 position = Vector2(163, 32)
+enemies = [NodePath("../../Checkpoints/Checkpoint/Enemies/BasicEnemy3"), NodePath("../../Checkpoints/Checkpoint/Enemies/BasicEnemy4")]
 
 [editable path="Checkpoints/Checkpoint"]
 [editable path="Checkpoints/Checkpoint2"]
