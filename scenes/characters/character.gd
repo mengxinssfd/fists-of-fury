@@ -156,6 +156,7 @@ func _ready() -> void:
 	collateral_emitter.area_entered.connect(on_emit_collateral_damage.bind())
 	collateral_emitter.body_entered.connect(on_wall_hit.bind())
 	set_health(max_health)
+	set_sprite_height_position()
 
 func _process(delta: float) -> void:
 	handle_input()
