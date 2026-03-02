@@ -101,6 +101,8 @@ enum State {
 	PREP_SHOOT,
 	## 恢复
 	RECOVER,
+	## 从天而降
+	DROP,
 }
 enum Type {
 	PLAYER,
@@ -131,6 +133,7 @@ var anim_map := {
 	State.SHOOT: "shoot",
 	State.PREP_SHOOT: "idle",
 	State.RECOVER: "recover",
+	State.DROP: "idle",
 }
 ## 剩余子弹数量
 var ammo_left := 0
@@ -194,7 +197,7 @@ func handle_animations() -> void:
 		animation_player.play(ani)
 
 func handle_air_time(delta: float) -> void:
-	if state_in(State.JUMP, State.JUMPKICK, State.FALL):
+	if state_in(State.JUMP, State.JUMPKICK, State.FALL, State.DROP):
 		height += height_speed * delta
 		if height < 0:
 			height = 0

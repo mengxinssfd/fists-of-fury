@@ -17,13 +17,13 @@ texture = ExtResource("2_5wvst")
 position = Vector2(97, 0)
 
 [node name="GoonEnemy" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(540036729, 656840839) index="0" unique_id=1157332406 instance=ExtResource("4_p7lra")]
-position = Vector2(-7, 44)
+position = Vector2(-9, 53)
 
-[node name="GoonEnemy2" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(540036729, 656840839) index="1" unique_id=2006039019 instance=ExtResource("4_p7lra")]
+[node name="BasicEnemy" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(540036729, 656840839) index="1" unique_id=1426550428 instance=ExtResource("5_j5gp6")]
+position = Vector2(78, -10)
+
+[node name="GoonEnemy2" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(540036729, 656840839) index="2" unique_id=2006039019 instance=ExtResource("4_p7lra")]
 position = Vector2(-8, 61)
-
-[node name="BasicEnemy" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(540036729, 656840839) index="2" unique_id=1426550428 instance=ExtResource("5_j5gp6")]
-position = Vector2(109, 39)
 
 [node name="BasicEnemy2" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(540036729, 656840839) index="3" unique_id=1884130342 instance=ExtResource("5_j5gp6")]
 position = Vector2(110, 59)
@@ -43,7 +43,7 @@ position = Vector2(-8, 61)
 position = Vector2(110, 59)
 
 [node name="ThugEnemy" parent="Checkpoints/Checkpoint2/Enemies" parent_id_path=PackedInt32Array(2144238590, 656840839) index="2" unique_id=1136274190 instance=ExtResource("6_mslao")]
-position = Vector2(67, 24)
+position = Vector2(78, -11)
 
 [node name="BasicEnemy3" parent="Checkpoints/Checkpoint2/Enemies" parent_id_path=PackedInt32Array(2144238590, 656840839) index="3" unique_id=641677716 instance=ExtResource("5_j5gp6")]
 position = Vector2(66, 90)
@@ -53,7 +53,7 @@ has_gun = true
 position = Vector2(-22, 84)
 
 [node name="GoonEnemy4" parent="Checkpoints/Checkpoint2/Enemies" parent_id_path=PackedInt32Array(2144238590, 656840839) index="5" unique_id=1040017418 instance=ExtResource("4_p7lra")]
-position = Vector2(-39, 17)
+position = Vector2(18, -13)
 
 [node name="PlayerDetectionArea" parent="Checkpoints/Checkpoint2" index="1" unique_id=1829021954]
 collision_layer = 0
@@ -74,19 +74,19 @@ has_knife = true
 position = Vector2(58, 80)
 
 [node name="ThugEnemy2" parent="Checkpoints/Checkpoint3/Enemies" parent_id_path=PackedInt32Array(865896700, 656840839) index="3" unique_id=1063352031 instance=ExtResource("6_mslao")]
-position = Vector2(30, 13)
+position = Vector2(29, -11)
 
 [node name="ThugEnemy3" parent="Checkpoints/Checkpoint3/Enemies" parent_id_path=PackedInt32Array(865896700, 656840839) index="4" unique_id=564184160 instance=ExtResource("6_mslao")]
-position = Vector2(103, 21)
+position = Vector2(98, 13)
 
 [node name="GoonEnemy3" parent="Checkpoints/Checkpoint3/Enemies" parent_id_path=PackedInt32Array(865896700, 656840839) index="5" unique_id=334601639 instance=ExtResource("4_p7lra")]
 position = Vector2(20, 86)
 
 [node name="GoonEnemy4" parent="Checkpoints/Checkpoint3/Enemies" parent_id_path=PackedInt32Array(865896700, 656840839) index="6" unique_id=603941586 instance=ExtResource("4_p7lra")]
-position = Vector2(67, 14)
+position = Vector2(73, -14)
 
 [node name="GoonEnemy5" parent="Checkpoints/Checkpoint3/Enemies" parent_id_path=PackedInt32Array(865896700, 656840839) index="7" unique_id=1313747921 instance=ExtResource("4_p7lra")]
-position = Vector2(1, 27)
+position = Vector2(5, -15)
 
 [node name="PlayerDetectionArea" parent="Checkpoints/Checkpoint3" index="1" unique_id=1829021954]
 collision_layer = 0

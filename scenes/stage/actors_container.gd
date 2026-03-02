@@ -58,6 +58,8 @@ func on_spawn_enemy(enemy_data: EnemyData) -> void:
 	var enemy: Character = enemy_map[enemy_data.type].instantiate()
 	enemy.global_position = enemy_data.global_position
 	enemy.player = player
+	enemy.state = enemy_data.state
+	enemy.height = enemy_data.height
 	add_child(enemy)
 
 func on_orphan_actor(orphan: Node2D) -> void:

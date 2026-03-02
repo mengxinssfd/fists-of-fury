@@ -47,4 +47,3 @@ player = NodePath("Player")
 [node name="Player" parent="ActorsContainer" unique_id=667198498 instance=ExtResource("2_fj7yv")]
 position = Vector2(32, 54)
 collision_layer = 2
-has_gun = true
