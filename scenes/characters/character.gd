@@ -159,7 +159,7 @@ func _ready() -> void:
 	damage_receiver.damage_received.connect(on_receive_damage.bind())
 	collateral_emitter.area_entered.connect(on_emit_collateral_damage.bind())
 	collateral_emitter.body_entered.connect(on_wall_hit.bind())
-	set_health(max_health)
+	set_health(max_health, type == Type.PLAYER)
 	set_sprite_height_position()
 
 func _process(delta: float) -> void:
@@ -479,5 +479,7 @@ func state_is(status: State) -> bool:
 func state_in(...states: Array) -> bool:
 	return states.has(state)
 
-func set_health(value: int) -> void:
+func set_health(value: int, emit_sn := true) -> void:
 	current_health = clamp(value, 0, max_health)
+	if emit_sn:
+		DamageManager.health_change.emit(type, current_health, max_health)
