@@ -2,7 +2,8 @@ class_name BasicEnemy
 extends Character
 
 const EDGE_SCREEN_BUFFER := 10
-
+## 单位 ms
+@export var duration_appear: float
 ## 两次近战攻击间的间隔时间，单位 ms
 @export var duration_between_melee_attacks : int
 ## 两次远距离攻击间的间隔时间，单位 ms
@@ -12,6 +13,8 @@ const EDGE_SCREEN_BUFFER := 10
 ## 远距离攻击前的准备时间，单位 ms
 @export var duration_prep_range_attack : int
 @export var player : Player
+
+@onready var time_appear := DurationTool.new(duration_appear)
 
 var assigned_door_index := -1
 var player_slot: EnemySlot = null
@@ -27,6 +30,9 @@ func _ready() -> void:
 		"punch_alt",
 	]
 
+func _process(delta: float) -> void:
+	super._process(delta)
+	process_appear()
 
 func handle_input() -> void:
 	if can_move():
@@ -109,6 +115,18 @@ func assign_door(door: Door) -> void:
 		set_state(State.WAIT)
 		door.open()
 		door.opened.connect(on_animation_complete.bind())
+	else:
+		set_state(State.APPEARING)
+		modulate.a = 0
+		#time_appear.refresh()
+
+func process_appear() -> void:
+	if not state_is(State.APPEARING): return
+	var progress := time_appear.get_progress()
+	modulate.a = progress
+	if progress < 1: return
+	modulate.a = 1
+	set_state(State.IDLE)
 
 func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void :
 	super.on_receive_damage(dmg, direction, hit_type)

@@ -29,7 +29,7 @@ position = Vector2(56, 28)
 position = Vector2(76, 28)
 
 [node name="BasicEnemy2" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(540036729, 656840839) index="2" unique_id=1884130342 instance=ExtResource("5_j5gp6")]
-position = Vector2(110, 59)
+position = Vector2(59, 28)
 
 [node name="GoonEnemy" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(540036729, 656840839) index="3" unique_id=1157332406 instance=ExtResource("4_p7lra")]
 position = Vector2(-9, 53)
@@ -99,6 +99,7 @@ position = Vector2(73, -14)
 
 [node name="GoonEnemy5" parent="Checkpoints/Checkpoint3/Enemies" parent_id_path=PackedInt32Array(865896700, 656840839) index="7" unique_id=1313747921 instance=ExtResource("4_p7lra")]
 position = Vector2(5, -15)
+duration_appear = 0.0
 
 [node name="PlayerDetectionArea" parent="Checkpoints/Checkpoint3" index="1" unique_id=1829021954]
 collision_layer = 0
@@ -116,7 +117,7 @@ content_type = 2
 
 [node name="Door" parent="Doors" parent_id_path=PackedInt32Array(876184455) index="0" unique_id=1560958627 node_paths=PackedStringArray("enemies") instance=ExtResource("8_w6ome")]
 position = Vector2(163, 32)
-enemies = [NodePath("../../Checkpoints/Checkpoint/Enemies/BasicEnemy3"), NodePath("../../Checkpoints/Checkpoint/Enemies/BasicEnemy4")]
+enemies = [NodePath("../../Checkpoints/Checkpoint/Enemies/BasicEnemy3"), NodePath("../../Checkpoints/Checkpoint/Enemies/BasicEnemy4"), NodePath("../../Checkpoints/Checkpoint/Enemies/BasicEnemy2")]
 
 [editable path="Checkpoints/Checkpoint"]
 [editable path="Checkpoints/Checkpoint2"]
