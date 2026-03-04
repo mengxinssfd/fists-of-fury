@@ -71,6 +71,7 @@ func on_receive_damage(dmg: int, direction: Vector2, _hit_type: DamageReceiver.H
 		knockback_force = direction * knockback_intensity
 		return
 	set_health(current_health - dmg)
+	ComboManager.register_hit.emit()
 	if current_health == 0:
 		set_state(State.FALL)
 		height_speed = knockdown_intensity

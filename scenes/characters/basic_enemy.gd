@@ -130,6 +130,7 @@ func process_appear() -> void:
 
 func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void :
 	super.on_receive_damage(dmg, direction, hit_type)
+	ComboManager.register_hit.emit()
 	if current_health == 0 and player != null:
 		free_player_slot()
 		EntityManager.death_enemy.emit(self)

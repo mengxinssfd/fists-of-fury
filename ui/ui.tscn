@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://btdtmaraiyut2" path="res://ui/ui.gd" id="1_vkava"]
 [ext_resource type="Texture2D" uid="uid://cwijjphkymmd4" path="res://assets/art/ui/avatars/avatar-player.png" id="2_ks8t7"]
 [ext_resource type="PackedScene" uid="uid://c5sxeknxucej1" path="res://ui/health_bar.tscn" id="3_wl5ax"]
+[ext_resource type="PackedScene" uid="uid://gy83brwn3emk" path="res://ui/combo_indicator.tscn" id="5_tf0e0"]
 
 [node name="UI" type="CanvasLayer" unique_id=905638500]
 script = ExtResource("1_vkava")
@@ -52,3 +53,14 @@ offset_right = 18.0
 offset_bottom = 11.0
 grow_horizontal = 0
 scale = Vector2(-1, 1)
+
+[node name="ComboIndicator" parent="UIContainer" unique_id=1425576553 instance=ExtResource("5_tf0e0")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -6.0
+offset_right = 20.0
+offset_bottom = 0.0
+grow_vertical = 0

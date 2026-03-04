@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://gy83brwn3emk"]
+
+[ext_resource type="Theme" uid="uid://dq6jn7fw6yik0" path="res://gui_theme.tres" id="1_1wonu"]
+[ext_resource type="Script" uid="uid://c41ub8d5nflog" path="res://ui/combo_indicator.gd" id="2_t6tbe"]
+
+[node name="ComboIndicator" type="Label" unique_id=1425576553]
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("1_1wonu")
+text = "x10 "
+script = ExtResource("2_t6tbe")
+duration_combo_timeout = 3000.0

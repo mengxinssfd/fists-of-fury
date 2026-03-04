@@ -24,6 +24,7 @@ config/icon="res://icon.svg"
 EntityManager="*res://utils/entity_manager.gd"
 StageManager="*uid://c01e6b1af7k0u"
 DamageManager="*uid://bk31dq5mcf7f4"
+ComboManager="*uid://c1e1iwys5nhy4"
 
 [display]
 
