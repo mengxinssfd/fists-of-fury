@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cwijjphkymmd4" path="res://assets/art/ui/avatars/avatar-player.png" id="2_ks8t7"]
 [ext_resource type="PackedScene" uid="uid://c5sxeknxucej1" path="res://ui/health_bar.tscn" id="3_wl5ax"]
 [ext_resource type="PackedScene" uid="uid://gy83brwn3emk" path="res://ui/combo_indicator.tscn" id="5_tf0e0"]
+[ext_resource type="PackedScene" uid="uid://c4ac8dxe334l6" path="res://ui/score_indicator.tscn" id="6_obcwv"]
 
 [node name="UI" type="CanvasLayer" unique_id=905638500]
 script = ExtResource("1_vkava")
@@ -64,3 +65,10 @@ offset_top = -6.0
 offset_right = 20.0
 offset_bottom = 0.0
 grow_vertical = 0
+
+[node name="ScoreIndicator" parent="UIContainer" unique_id=140773086 instance=ExtResource("6_obcwv")]
+layout_mode = 1
+offset_left = 12.0
+offset_top = 1.0
+offset_right = 47.0
+offset_bottom = 7.0

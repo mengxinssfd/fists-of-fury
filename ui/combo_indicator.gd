@@ -1,5 +1,7 @@
 class_name ComboIndicator extends Label
 
+signal combo_reset(points: int)
+
 ## 连击数停止攻击超过一定时间后重置，单位ms
 @export var duration_combo_timeout: float
 
@@ -15,6 +17,7 @@ func _init() -> void:
 
 func _process(_delta: float) -> void:
 	if time_hit.is_over_duration():
+		combo_reset.emit(current_combo)
 		current_combo = 0
 		refresh()
 
