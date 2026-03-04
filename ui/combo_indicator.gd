@@ -16,7 +16,7 @@ func _init() -> void:
 
 
 func _process(_delta: float) -> void:
-	if time_hit.is_over_duration():
+	if current_combo > 0 and time_hit.is_over_duration():
 		combo_reset.emit(current_combo)
 		current_combo = 0
 		refresh()
