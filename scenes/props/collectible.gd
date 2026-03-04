@@ -64,6 +64,7 @@ func on_emit_damage(receiver: DamageReceiver) -> void:
 		direction,
 		DamageReceiver.HitType.KNOCKDOWN
 	)
+	EntityManager.spawn_spark.emit(position)
 	queue_free()
 
 func handle_animations() -> void:

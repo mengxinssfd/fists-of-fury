@@ -74,6 +74,7 @@ func on_receive_damage(dmg: int, direction: Vector2, _hit_type: DamageReceiver.H
 	ComboManager.register_hit.emit()
 	if current_health == 0:
 		set_state(State.FALL)
+		EntityManager.spawn_spark.emit(position)
 		height_speed = knockdown_intensity
 		velocity = direction * knockdown_intensity
 		EntityManager.death_enemy.emit(self)

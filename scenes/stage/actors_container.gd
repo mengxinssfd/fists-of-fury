@@ -1,21 +1,24 @@
 extends Node2D
 
 const SHOT_PREFAB := preload("res://scenes/props/shot.tscn")
+const SPARK_PREFAB := preload("res://scenes/props/spark.tscn")
 const prefab_map := {
 	Collectible.Type.KNIFE: preload("res://scenes/props/knife.tscn"),
 	Collectible.Type.GUN: preload("res://scenes/props/gun.tscn"),
 	Collectible.Type.FOOD: preload("res://scenes/props/food.tscn"),
 }
-var enemy_map := {
-	Character.Type.PUNK:  preload("res://scenes/characters/basic_enemy.tscn"),
-	Character.Type.GOON:  preload("res://scenes/characters/goon_enemy.tscn"),
-	Character.Type.THUG:  preload("res://scenes/characters/thug_enemy.tscn"),
-	Character.Type.BOUNCER:  preload("res://scenes/characters/igor_boss.tscn"),
-}
 
 @export var player: Player
 
+var enemy_map := {
+	Character.Type.PUNK: preload("res://scenes/characters/basic_enemy.tscn"),
+	Character.Type.GOON: preload("res://scenes/characters/goon_enemy.tscn"),
+	Character.Type.THUG: preload("res://scenes/characters/thug_enemy.tscn"),
+	Character.Type.BOUNCER: preload("res://scenes/characters/igor_boss.tscn"),
+}
+
 var doors: Array[Door] = []
+
 
 # 类似vue的组件生命周期一样，要在created而不是mounted做监听
 #func _ready() -> void:
@@ -24,17 +27,19 @@ func _init() -> void:
 	EntityManager.spawn_collectible.connect(on_spawn_collectible.bind())
 	EntityManager.spawn_shot.connect(on_spawn_shot.bind())
 	EntityManager.spawn_enemy.connect(on_spawn_enemy.bind())
+	EntityManager.spawn_spark.connect(on_spawn_spark.bind())
+
 
 # 生成可拾取道具
 func on_spawn_collectible(
-	type: Collectible.Type, 
+	type: Collectible.Type,
 	initial_state: Collectible.State,
 	collectible_global_position: Vector2,
 	collectible_direction: Vector2,
 	initial_height: float,
 	autodestroy: bool,
 ) -> void:
-	var collectible : Collectible = prefab_map[type].instantiate()
+	var collectible: Collectible = prefab_map[type].instantiate()
 	collectible.set_state(initial_state)
 	collectible.direction = collectible_direction
 	collectible.global_position = collectible_global_position
@@ -42,6 +47,7 @@ func on_spawn_collectible(
 	collectible.autodestroy = autodestroy
 	#add_child(collectible)
 	call_deferred("add_child", collectible)
+
 
 func on_spawn_shot(
 	gun_root_position: Vector2,
@@ -55,6 +61,7 @@ func on_spawn_shot(
 	# 不能在此 add_child，不然子弹不会消失
 	#add_child(shot)
 
+
 #func on_spawn_enemy(enemy_data: EnemyData, player: Player) -> void:
 func on_spawn_enemy(enemy_data: EnemyData) -> void:
 	var enemy: BasicEnemy = enemy_map[enemy_data.type].instantiate()
@@ -65,6 +72,13 @@ func on_spawn_enemy(enemy_data: EnemyData) -> void:
 	if enemy_data.door_index > -1:
 		enemy.assign_door(doors[enemy_data.door_index])
 	add_child(enemy)
+
+
+func on_spawn_spark(spark_position: Vector2) -> void:
+	var spark: Node2D = SPARK_PREFAB.instantiate()
+	spark.position = spark_position
+	add_child(spark)
+
 
 func on_orphan_actor(orphan: Node2D) -> void:
 	orphan.reparent(self)

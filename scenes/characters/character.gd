@@ -335,6 +335,7 @@ func shoot_gun() -> void:
 			heading,
 			DamageReceiver.HitType.KNOCKDOWN
 		)
+		EntityManager.spawn_spark.emit(target.position)
 	var weapon_global_position := Vector2(
 		weapon_position.global_position.x,
 		position.y

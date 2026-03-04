@@ -6,7 +6,7 @@ signal death_enemy(enemy: Character)
 signal orphan_actor(orphan: Node2D)
 ## 生成可拾取道具
 signal spawn_collectible(
-	type: Collectible.Type, 
+	type: Collectible.Type,
 	initial_state: Collectible.State,
 	collectible_global_position: Vector2,
 	collectible_direction: Vector2,
@@ -25,3 +25,4 @@ signal spawn_shot(
 ## 生成敌人
 #signal spawn_enemy(enemy_data: EnemyData, player: Player)
 signal spawn_enemy(enemy_data: EnemyData)
+signal spawn_spark(spark_position: Vector2)
