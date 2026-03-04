@@ -27,7 +27,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if time_dispear.is_over_duration():
+	if enemy_avatar.visible and time_dispear.is_over_duration():
 		set_enemy_visible(false)
 
 
