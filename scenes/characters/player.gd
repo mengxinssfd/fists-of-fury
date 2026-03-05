@@ -56,11 +56,13 @@ func handle_input() -> void:
 					is_last_hit_successful = false
 				else:
 					attack_combo_index = 0
+				SoundPlayer.play(SoundManager.Sound.SWOOSH)
 	if can_jump() and Input.is_action_just_pressed("jump"):
 		set_state(State.TAKEOFF)
 		attack_combo_index = 0
 	if can_jumpkick() and Input.is_action_just_pressed("attack"):
 		set_state(State.JUMPKICK)
+		SoundPlayer.play(SoundManager.Sound.SWOOSH)
 
 func reserve_slot(enemy: BasicEnemy) -> EnemySlot:
 	var available_slots := enemy_slots.filter(

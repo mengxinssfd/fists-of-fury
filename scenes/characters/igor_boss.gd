@@ -78,6 +78,7 @@ func on_receive_damage(dmg: int, direction: Vector2, _hit_type: DamageReceiver.H
 		height_speed = knockdown_intensity
 		velocity = direction * knockdown_intensity
 		EntityManager.death_enemy.emit(self)
+		SoundPlayer.play(SoundManager.Sound.GRUNT)
 	else:
 		velocity = Vector2.ZERO
 		set_state(State.HURT)

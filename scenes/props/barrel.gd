@@ -41,6 +41,7 @@ func on_receive_damage(_damage: int, direction: Vector2, _hit_type: DamageReceiv
 			0.0,
 			false
 		)
+		SoundPlayer.play(SoundManager.Sound.HIT1, true)
 
 func handle_air_time(delta: float) -> void:
 	if state == State.DESTROYED:

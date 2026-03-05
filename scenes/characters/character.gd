@@ -347,17 +347,21 @@ func shoot_gun() -> void:
 		distance,
 		weapon_height,
 	)
+	SoundPlayer.play(SoundManager.Sound.GUN_SHOT)
 
 func pickup_collectible() -> void:
 	var collectible := get_collectible()
 	if can_pickup_collectible(collectible):
 		if collectible.type == Collectible.Type.KNIFE:
 			has_knife = true
+			SoundPlayer.play(SoundManager.Sound.SWOOSH)
 		elif collectible.type == Collectible.Type.GUN:
 			has_gun = true
 			ammo_left = max_ammo_per_gun
+			SoundPlayer.play(SoundManager.Sound.SWOOSH)
 		elif collectible.type == Collectible.Type.FOOD:
 			set_health(max_health)
+			SoundPlayer.play(SoundManager.Sound.EAT_FOOD)
 		collectible.queue_free()
 
 
@@ -372,6 +376,7 @@ func is_collision_disalbed() -> bool:
 func on_takeoff_complete() -> void:
 	set_state(State.JUMP)
 	height_speed = jump_intensity
+	SoundPlayer.play(SoundManager.Sound.SWOOSH)
 
 func on_pickup_complete() -> void:
 	set_state(State.IDLE)
@@ -407,6 +412,7 @@ func on_throw_complete() -> void:
 		weapon_height,
 		false,
 	)
+	SoundPlayer.play(SoundManager.Sound.SWOOSH)
 
 func on_emit_damage(receiver: DamageReceiver) -> void:
 	var hit_type := DamageReceiver.HitType.NORMAL
@@ -459,6 +465,7 @@ func on_receive_damage(dmg: int, direction: Vector2, hit_type: DamageReceiver.Hi
 			autodestroy_on_drop,
 		)
 	set_health(current_health - dmg)
+	SoundPlayer.play(SoundManager.Sound.HIT2, true)
 	if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 		set_state(State.FALL)
 		height_speed = knockdown_intensity
