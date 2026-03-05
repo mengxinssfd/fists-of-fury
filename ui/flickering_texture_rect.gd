@@ -5,26 +5,24 @@ class_name FlickeringTextureRect extends TextureRect
 
 var is_flickering := false
 var flickers_left := 0
-var image: Texture2D = null
 
 @onready var time_last_flicker := DurationTool.new(duration_flicker)
 
 
 func _ready() -> void:
-	image = texture
-	texture = null
+	visible = false
 
 
 func _process(_delta: float) -> void:
 	if is_flickering and time_last_flicker.is_over_duration():
-		if texture == null:
+		if not visible:
 			if flickers_left == 0:
 				is_flickering = false
 			else:
 				flickers_left -= 1
-				texture = image
+				visible = true
 		else:
-			texture = null
+			visible = false
 		time_last_flicker.refresh()
 
 
