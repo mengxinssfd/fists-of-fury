@@ -5,3 +5,4 @@ signal health_change(
 	current_health: int,
 	max_health: int,
 )
+signal heavy_blow_received

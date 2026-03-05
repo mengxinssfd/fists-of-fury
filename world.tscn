@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://6q31s1db22pr" path="res://world.gd" id="1_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://bvqop0u6krsmm" path="res://scenes/characters/player.tscn" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://c6elbno7atr0e" path="res://scenes/stage/actors_container.gd" id="3_gbfbk"]
+[ext_resource type="Script" uid="uid://bklidnyx3j3u3" path="res://scenes/stage/camera.gd" id="4_dwbse"]
 [ext_resource type="PackedScene" uid="uid://c1eth3g8ms14e" path="res://ui/ui.tscn" id="5_036b0"]
 [ext_resource type="PackedScene" uid="uid://yqv7rarj3ed8" path="res://scenes/stage/stage_01_streets.tscn" id="6_pkg7o"]
 
@@ -20,6 +21,9 @@ script = ExtResource("1_tlwt5")
 position = Vector2(50, 32)
 position_smoothing_enabled = true
 position_smoothing_speed = 3.0
+script = ExtResource("4_dwbse")
+duration_shake = 50
+shake_intensity = 1
 
 [node name="InvisibleWalls" type="Node2D" parent="Camera" unique_id=287520316]
 position = Vector2(-50, -32)
