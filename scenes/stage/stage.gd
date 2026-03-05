@@ -1,5 +1,7 @@
 class_name Stage extends Node2D
 
+@export var music: MusicManager.Music
+
 @onready var containers: Node2D = $Containers
 @onready var doors: Node2D = $Doors
 @onready var checkpoints: Node2D = $Checkpoints
@@ -14,3 +16,4 @@ func _ready() -> void:
 		EntityManager.orphan_actor.emit(door)
 	for checkpoint: Checkpoint in checkpoints.get_children():
 		checkpoint.create_enemy_data()
+	MusicPlayer.play(music)
