@@ -1,5 +1,7 @@
 class_name UI extends CanvasLayer
 
+const OPTIONS_SCREEN := preload("res://ui/options_screen.tscn")
+
 const avatar_map := {
 	Character.Type.PUNK: preload("res://assets/art/ui/avatars/avatar-punk.png"),
 	Character.Type.GOON: preload("res://assets/art/ui/avatars/avatar-goon.png"),
@@ -7,6 +9,7 @@ const avatar_map := {
 	Character.Type.BOUNCER: preload("res://assets/art/ui/avatars/avatar-boss.png"),
 }
 
+var options_screen: OptionsScreen = null
 @export var duration_enemy_dispear: float
 
 @onready var player_health_bar: HealthBar = $UIContainer/PlayerHealthBar
@@ -32,7 +35,16 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if enemy_avatar.visible and time_dispear.is_over_duration():
 		set_enemy_visible(false)
+	handle_input()
 
+func handle_input() -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		if options_screen == null:
+			var os := OPTIONS_SCREEN.instantiate()
+			options_screen = os
+			add_child(os)
+		else:
+			options_screen.queue_free()
 
 func on_combo_reset(points: int) -> void:
 	score_indicator.add_combo(points)
