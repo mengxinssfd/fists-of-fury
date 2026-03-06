@@ -41,6 +41,7 @@ func _process(_delta: float) -> void:
 
 func handle_input() -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
+		SoundPlayer.play(SoundManager.Sound.CLICK)
 		if options_screen == null:
 			var os := OPTIONS_SCREEN.instantiate()
 			options_screen = os

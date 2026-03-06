@@ -5,6 +5,7 @@ signal press
 
 func _process(_delta: float) -> void:
 	if is_active and has_input_toggle():
+		SoundPlayer.play(SoundManager.Sound.CLICK)
 		press.emit()
 
 

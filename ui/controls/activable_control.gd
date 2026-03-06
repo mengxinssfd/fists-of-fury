@@ -22,6 +22,7 @@ func _ready() -> void:
 func set_value(value: int) -> void:
 	current_value = clampi(value, min_value, max_value)
 	value_change.emit(value)
+	SoundPlayer.play(SoundManager.Sound.CLICK)
 	refresh()
 
 

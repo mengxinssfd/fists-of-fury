@@ -38,12 +38,14 @@ func on_exit() -> void:
 
 func handle_input() -> void:
 	if Input.is_action_just_pressed("ui_down"):
-		active_index = get_safe_index(active_index + 1)
-		refresh()
+		set_active_index(active_index + 1)
 	if Input.is_action_just_pressed("ui_up"):
-		active_index = get_safe_index(active_index - 1)
-		refresh()
+		set_active_index(active_index - 1)
 
+func set_active_index(value: int) ->void:
+	active_index = get_safe_index(value)
+	refresh()
+	SoundPlayer.play(SoundManager.Sound.CLICK)
 
 func get_safe_index(index: int) -> int:
 	return clampi(index, 0, list.size() - 1)

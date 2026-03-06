@@ -26,5 +26,6 @@ func rand_intensity() -> int:
 
 
 func on_heavy_blow_received() -> void:
-	is_shaking = true
-	time_shaking.refresh()
+	if OptionsManager.is_shakescreen_enabled:
+		is_shaking = true
+		time_shaking.refresh()
