@@ -14,6 +14,7 @@ var knockback_force := Vector2.ZERO
 var time_last_attack := Time.get_ticks_msec()
 # 开始虚弱的时间
 var time_start_vulerable := Time.get_ticks_msec()
+var assigned_door_index := -1
 
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -82,6 +83,7 @@ func on_receive_damage(dmg: int, direction: Vector2, _hit_type: DamageReceiver.H
 	else:
 		velocity = Vector2.ZERO
 		set_state(State.HURT)
+		SoundPlayer.play(SoundManager.Sound.HIT2, true)
 
 func on_animation_complete() -> void:
 	if state_is(State.HURT):

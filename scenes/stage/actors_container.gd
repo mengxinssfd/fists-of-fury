@@ -64,7 +64,7 @@ func on_spawn_shot(
 
 #func on_spawn_enemy(enemy_data: EnemyData, player: Player) -> void:
 func on_spawn_enemy(enemy_data: EnemyData) -> void:
-	var enemy: BasicEnemy = enemy_map[enemy_data.type].instantiate()
+	var enemy = enemy_map[enemy_data.type].instantiate()
 	enemy.global_position = enemy_data.global_position
 	enemy.player = player
 	enemy.set_state(enemy_data.state)
