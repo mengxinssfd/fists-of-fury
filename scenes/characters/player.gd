@@ -36,6 +36,7 @@ func handle_input() -> void:
 		velocity = direction * speed
 
 	if can_attack() and Input.is_action_just_pressed("attack"):
+		velocity = Vector2.ZERO
 		if has_knife:
 			set_state(State.THROW)
 		elif has_gun:
