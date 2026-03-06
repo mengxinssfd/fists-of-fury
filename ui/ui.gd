@@ -9,8 +9,9 @@ const avatar_map := {
 	Character.Type.BOUNCER: preload("res://assets/art/ui/avatars/avatar-boss.png"),
 }
 
-var options_screen: OptionsScreen = null
 @export var duration_enemy_dispear: float
+
+var options_screen: OptionsScreen = null
 
 @onready var player_health_bar: HealthBar = $UIContainer/PlayerHealthBar
 @onready var enemy_health_bar: HealthBar = $UIContainer/EnemyHealthBar
@@ -37,16 +38,23 @@ func _process(_delta: float) -> void:
 		set_enemy_visible(false)
 	handle_input()
 
+
 func handle_input() -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		if options_screen == null:
 			var os := OPTIONS_SCREEN.instantiate()
 			options_screen = os
+			options_screen.exit.connect(unpauce.bind())
 			add_child(os)
 			get_tree().paused = true
 		else:
-			options_screen.queue_free()
-			get_tree().paused = false
+			unpauce()
+
+
+func unpauce() -> void:
+	options_screen.queue_free()
+	get_tree().paused = false
+
 
 func on_combo_reset(points: int) -> void:
 	score_indicator.add_combo(points)

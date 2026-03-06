@@ -1,5 +1,7 @@
 class_name ActivableControl extends HBoxContainer
 
+signal value_change(value: int)
+
 @export var text: String
 @export var color_default: Color
 @export var color_active: Color
@@ -19,11 +21,12 @@ func _ready() -> void:
 
 func set_value(value: int) -> void:
 	current_value = clampi(value, min_value, max_value)
+	value_change.emit(value)
 	refresh()
 
 
 func refresh() -> void:
-	print(current_value)
+	pass
 
 
 func set_active(active: bool) -> void:

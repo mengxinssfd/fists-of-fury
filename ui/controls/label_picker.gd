@@ -1,4 +1,4 @@
-extends ActivableControl
+class_name LabelPicker extends ActivableControl
 
 signal press
 
