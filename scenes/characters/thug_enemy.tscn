@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cs2uew1k81upo"]
 
 [ext_resource type="PackedScene" uid="uid://cnunxhijfmru5" path="res://scenes/characters/goon_enemy.tscn" id="1_764t5"]
+[ext_resource type="Texture2D" uid="uid://c0rrfen3qk0hu" path="res://assets/art/characters/enemy_thug.png" id="2_qlivg"]
 
 [node name="ThugEnemy" unique_id=1136274190 instance=ExtResource("1_764t5")]
 duration_between_melee_attacks = 1500
@@ -11,6 +12,9 @@ duration_grounded = 1300.0
 can_respawn_knives = false
 has_knife = false
 has_gun = true
+
+[node name="CharacterSprite" parent="." index="1" unique_id=976784872]
+texture = ExtResource("2_qlivg")
 
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
