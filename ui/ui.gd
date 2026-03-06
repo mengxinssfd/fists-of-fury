@@ -43,8 +43,10 @@ func handle_input() -> void:
 			var os := OPTIONS_SCREEN.instantiate()
 			options_screen = os
 			add_child(os)
+			get_tree().paused = true
 		else:
 			options_screen.queue_free()
+			get_tree().paused = false
 
 func on_combo_reset(points: int) -> void:
 	score_indicator.add_combo(points)
