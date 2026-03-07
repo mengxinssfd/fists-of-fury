@@ -1,5 +1,7 @@
 class_name DeathScreen extends MarginContainer
 
+signal game_over
+
 @export var countdown_start: int
 
 var current_count := 0
@@ -25,6 +27,7 @@ func on_timeout() -> void:
 		current_count -= 1
 		refresh()
 	else:
+		game_over.emit()
 		queue_free()
 
 

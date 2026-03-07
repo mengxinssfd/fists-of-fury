@@ -14,7 +14,7 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 script = ExtResource("1_g3utg")
-countdown_start = 3
+countdown_start = 10
 
 [node name="Border" type="ColorRect" parent="." unique_id=1325527290]
 layout_mode = 2

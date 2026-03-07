@@ -1,7 +1,8 @@
 class_name UI extends CanvasLayer
 
-const OPTIONS_SCREEN := preload("res://ui/options_screen.tscn")
-const DEATH_SCREEN := preload("res://ui/death_screen.tscn")
+const OPTIONS_SCREEN = preload("res://ui/options_screen.tscn")
+const DEATH_SCREEN = preload("res://ui/death_screen.tscn")
+const GAME_OVER_SCREEN = preload("res://ui/game_over_screen.tscn")
 
 const avatar_map := {
 	Character.Type.PUNK: preload("res://assets/art/ui/avatars/avatar-punk.png"),
@@ -14,6 +15,7 @@ const avatar_map := {
 
 var options_screen: OptionsScreen = null
 var death_screen: DeathScreen = null
+var game_over_screen: GameOverScreen = null
 
 @onready var player_health_bar: HealthBar = $UIContainer/PlayerHealthBar
 @onready var enemy_health_bar: HealthBar = $UIContainer/EnemyHealthBar
@@ -72,6 +74,7 @@ func on_character_health_change(
 		player_health_bar.refresh(current_health, max_health)
 		if current_health == 0 and death_screen == null:
 			var ds: DeathScreen = DEATH_SCREEN.instantiate()
+			ds.game_over.connect(on_game_over.bind())
 			death_screen = ds
 			add_child(ds)
 	else:
@@ -79,6 +82,13 @@ func on_character_health_change(
 		enemy_avatar.texture = avatar_map[character_type]
 		enemy_health_bar.refresh(current_health, max_health)
 		set_enemy_visible(true)
+
+
+func on_game_over() -> void:
+	var go: GameOverScreen = GAME_OVER_SCREEN.instantiate()
+	game_over_screen = go
+	go.set_score(score_indicator.real_score)
+	add_child(go)
 
 
 func on_checkpoint_complete() -> void:

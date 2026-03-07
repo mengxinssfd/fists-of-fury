@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://cusd0ym4vfqbl"]
+
+[ext_resource type="Theme" uid="uid://dq6jn7fw6yik0" path="res://gui_theme.tres" id="1_dcpkc"]
+[ext_resource type="Script" uid="uid://b4byukbyqdxm0" path="res://ui/game_over_screen.gd" id="1_e20le"]
+[ext_resource type="PackedScene" uid="uid://c4ac8dxe334l6" path="res://ui/score_indicator.tscn" id="2_pmiq4"]
+
+[node name="GameOverScreen" type="Control" unique_id=1110742864]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e20le")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1075401644]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.078431375, 0.078431375, 0.078431375, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Background" unique_id=50624536]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/MarginContainer" unique_id=1338389562]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/MarginContainer/VBoxContainer" unique_id=1493919085]
+layout_mode = 2
+theme = ExtResource("1_dcpkc")
+theme_override_colors/font_color = Color(0.8156863, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer" unique_id=1188493697]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Background/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1358071002]
+layout_mode = 2
+theme = ExtResource("1_dcpkc")
+text = "SCORE:"
+
+[node name="ScoreIndicator" parent="Background/MarginContainer/VBoxContainer/HBoxContainer" unique_id=140773086 instance=ExtResource("2_pmiq4")]
+layout_mode = 2
+
+[node name="Timer" type="Timer" parent="." unique_id=657046172]
+one_shot = true
+autostart = true

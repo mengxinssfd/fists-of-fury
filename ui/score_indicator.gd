@@ -24,14 +24,17 @@ func _process(_delta: float) -> void:
 
 
 func on_player_revive() -> void:
-	real_score = max(0, real_score - points_per_life)
-	start_update()
+	set_score(real_score - points_per_life)
 
 
 # 5 => 5 + 4 + 3 + 2 + 1 = 15
 # 4 => 4 + 3 + 2 + 1 = 10
 func add_combo(points: int) -> void:
-	real_score += int((points * (points + 1)) / 2.0)
+	set_score(real_score + int((points * (points + 1)) / 2.0))
+
+
+func set_score(score: int) -> void:
+	real_score = max(0, score)
 	start_update()
 
 
