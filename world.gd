@@ -14,13 +14,14 @@ var is_stage_ready_for_loading := false
 
 @onready var stage_container: Node2D = $StageContainer
 @onready var actors_container: Node2D = $ActorsContainer
+@onready var stage_transition: StageTransition = $UI/UIContainer/StageTransition
 @onready var camera := $Camera
 
 
 func _ready() -> void:
 	StageManager.checkpoint_start.connect(on_checkpoint_start.bind())
 	StageManager.checkpoint_complete.connect(on_checkpoint_complete.bind())
-	StageManager.stage_complete.connect(load_next_stage.bind())
+	StageManager.stage_interim.connect(load_next_stage.bind())
 	camara_init_position = camera.position
 	load_next_stage()
 
@@ -29,6 +30,7 @@ func _process(_delta: float) -> void:
 	if is_stage_ready_for_loading:
 		is_stage_ready_for_loading = false
 		init_player_and_camara()
+		stage_transition.end_transition()
 	if player and not is_camara_locked and player.position.x > camera.position.x:
 		camera.position.x = player.position.x
 
@@ -52,6 +54,7 @@ func init_player_and_camara() -> void:
 		actors_container.player = player
 	player.position = stage.get_player_spawn_location()
 	camera.position = camara_init_position
+	camera.reset_smoothing()
 
 
 func on_checkpoint_start() -> void:

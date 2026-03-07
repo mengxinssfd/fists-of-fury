@@ -24,11 +24,13 @@ var game_over_screen: GameOverScreen = null
 @onready var score_indicator: Label = $UIContainer/ScoreIndicator
 @onready var go_indicator: FlickeringTextureRect = $UIContainer/GoIndicator
 @onready var time_dispear := DurationTool.new(duration_enemy_dispear)
+@onready var stage_transition: StageTransition = $UIContainer/StageTransition
 
 
 func _init() -> void:
 	DamageManager.health_change.connect(on_character_health_change.bind())
 	StageManager.checkpoint_complete.connect(on_checkpoint_complete.bind())
+	StageManager.stage_complete.connect(on_stage_complete.bind())
 
 
 func _ready() -> void:
@@ -93,6 +95,10 @@ func on_game_over() -> void:
 
 func on_checkpoint_complete(_checkpoint: Checkpoint) -> void:
 	go_indicator.start_flickering()
+
+
+func on_stage_complete() -> void:
+	stage_transition.start_transition()
 
 
 func set_enemy_visible(value: bool) -> void:
