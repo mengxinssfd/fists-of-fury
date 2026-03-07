@@ -1,6 +1,7 @@
 class_name UI extends CanvasLayer
 
 const OPTIONS_SCREEN := preload("res://ui/options_screen.tscn")
+const DEATH_SCREEN := preload("res://ui/death_screen.tscn")
 
 const avatar_map := {
 	Character.Type.PUNK: preload("res://assets/art/ui/avatars/avatar-punk.png"),
@@ -12,6 +13,7 @@ const avatar_map := {
 @export var duration_enemy_dispear: float
 
 var options_screen: OptionsScreen = null
+var death_screen: DeathScreen = null
 
 @onready var player_health_bar: HealthBar = $UIContainer/PlayerHealthBar
 @onready var enemy_health_bar: HealthBar = $UIContainer/EnemyHealthBar
@@ -68,6 +70,10 @@ func on_character_health_change(
 ) -> void:
 	if character_type == Character.Type.PLAYER:
 		player_health_bar.refresh(current_health, max_health)
+		if current_health == 0 and death_screen == null:
+			var ds: DeathScreen = DEATH_SCREEN.instantiate()
+			death_screen = ds
+			add_child(ds)
 	else:
 		time_dispear.refresh()
 		enemy_avatar.texture = avatar_map[character_type]

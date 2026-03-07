@@ -28,6 +28,7 @@ func _init() -> void:
 	EntityManager.spawn_shot.connect(on_spawn_shot.bind())
 	EntityManager.spawn_enemy.connect(on_spawn_enemy.bind())
 	EntityManager.spawn_spark.connect(on_spawn_spark.bind())
+	DamageManager.player_revive.connect(on_player_revive.bind())
 
 
 # 生成可拾取道具
@@ -84,3 +85,11 @@ func on_orphan_actor(orphan: Node2D) -> void:
 	orphan.reparent(self)
 	if orphan is Door:
 		doors.append(orphan)
+
+
+func on_player_revive() -> void:
+	for child in get_children():
+		if child is Character:
+			var ch := child as Character
+			if ch.type != Character.Type.PLAYER:
+				ch.on_receive_damage(0, Vector2.ZERO, DamageReceiver.HitType.KNOCKDOWN)

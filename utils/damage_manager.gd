@@ -6,3 +6,4 @@ signal health_change(
 	max_health: int,
 )
 signal heavy_blow_received
+signal player_revive
