@@ -91,7 +91,7 @@ func on_game_over() -> void:
 	add_child(go)
 
 
-func on_checkpoint_complete() -> void:
+func on_checkpoint_complete(_checkpoint: Checkpoint) -> void:
 	go_indicator.start_flickering()
 
 

@@ -28,7 +28,7 @@ func create_enemy_data() -> void:
 		enemy_data.append(EnemyData.new(enemy.type, enemy.global_position, enemy.assigned_door_index))
 		enemy.queue_free()
 
-func on_player_enter(_player: Player) -> void:
+func on_player_enter(_player: Node2D) -> void:
 	if is_activated: return
 	# 如果一瞬间生成太多实体会卡的话可以放_process函数内生成
 	#for data:EnemyData in enemy_data:
@@ -41,5 +41,5 @@ func on_player_enter(_player: Player) -> void:
 func on_enemy_death(_enemy: Character) -> void:
 	active_enemy_counter -= 1
 	if active_enemy_counter == 0 and enemy_data.size() == 0:
+		StageManager.checkpoint_complete.emit(self)
 		queue_free()
-		StageManager.checkpoint_complete.emit()
